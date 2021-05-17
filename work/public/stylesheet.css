@@ -1,0 +1,100 @@
+/* トップ画面 */
+
+.header-top{
+    background-color: blueviolet;
+    height: 70px;
+}
+
+.doing-top{
+    background-color: aqua;
+    margin-top: 100px;
+    height: 200px;
+}
+
+.complete-top{
+    background-color: red;
+    height: 200px;
+    margin-top: 50px;
+
+}
+
+/* 一覧画面 */
+.header-list{
+    background-color: red;
+    height: 100px;
+}
+.current_folder{
+    background-color: aqua;
+    float: left;
+    width: 150px;
+
+    
+}
+
+.new_memo{
+    background-color: lightgreen;
+    float: right;
+    height: 70px;
+}
+
+.complete-list{
+    background-color: limegreen;
+    float: left;
+    width: 500px;
+    height:600px;
+    margin-left: 300px;
+}
+
+.doing-list{
+    background-color: brown;
+    float: right;
+    width: 500px;
+    height:600px;
+    margin-right: 300px;
+}
+
+.record{
+    background-color: blue;
+    height: 650px;
+}
+
+/* 学習記録記入画面 */
+
+.header-is{
+    background-color: red;
+    height: 100px;
+}
+
+.date{
+    float: right;
+    background-color: aqua;
+}
+
+.main{
+    background-color: darkgreen;
+    height: 200px;
+    margin-top: 100px;
+}
+
+.problem{
+    background-color: blueviolet;
+    
+}
+
+.solution{
+    background-color: brown;
+}
+
+.btn-is{
+    background-color: coral;
+}
+
+.box{
+    margin-bottom: 20px;
+}
+
+/* フォルダアイコン */
+.fa-folder{
+    color: #FFFF66;
+}
+
