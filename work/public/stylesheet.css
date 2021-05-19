@@ -98,3 +98,8 @@
     color: #FFFF66;
 }
 
+
+.delete {
+    color: #ccc;
+    cursor: pointer;
+  }

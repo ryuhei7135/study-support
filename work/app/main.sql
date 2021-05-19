@@ -11,5 +11,6 @@ INSERT INTO worklists (title,is_done) VALUES ("bbb",false);
 
 SELECT * FROM worklists;
 
-DELETE FROM worklists WHERE title is NULL;
+DROP TABLE worklists;
+
 

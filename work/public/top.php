@@ -5,7 +5,7 @@ const FILENAME = '../app/folder.txt';
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $icon = filter_input(INPUT_POST,'icon');  /* <i class='fas fa-folder fa-3x'></i>を受け取る */
     $fp = fopen(FILENAME,'a'); /* テキストファイルを追記モードで開く */
-    fwrite($fp,$icon.PHP_EOL); /* テキストファイルに追記  ここでエラー*/
+    fwrite($fp,$icon.PHP_EOL); /* テキストファイルに追記*/
     fclose($fp);
     header('Location: http://localhost:8562/top.php');
     exit;
@@ -35,9 +35,14 @@ $folders = file(FILENAME,FILE_IGNORE_NEW_LINES);  /* テキストファイルの
 
     <div class="doing-top">
         <p>作業途中の仕事</p>
-        <?php foreach($folders as $folder): ?>
-        <a href="list.php"><?php echo $folder; ?></a> <!-- 配列の中のアイコンを表示 -->
-        <?php endforeach?>
+        <form action="" method="post">
+            <?php foreach($folders as $folder): ?>
+            
+            <a href="list.php">
+                <?php echo $folder; ?>
+            </a> <!-- 配列の中のアイコンを表示 -->
+            <?php endforeach?>
+        </form>
     </div>
 
     <div class="complete-top">

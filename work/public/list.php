@@ -4,9 +4,21 @@ require_once('../app/config.php');
 
 $pdo = getPdoInstance();
 
+createToken();
+
 $stmt = $pdo->query("SELECT * FROM worklists");
 $worklists = $stmt->fetchAll();
 
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    validateToken();
+    
+    deleteTodo($pdo);
+    header('Location: http://localhost:8562/list.php');
+    exit;
+
+
+}
 ?>
 
 
@@ -40,8 +52,16 @@ $worklists = $stmt->fetchAll();
                     if($worklist->is_done == 1):  /* 完了 */
             ?>
                 <li>
-                    <span><?= $worklist->created ?></span>
-                    <span><?= $worklist->title ?></span>
+                    <form action="" method="post">
+                        <a href="#">
+                            <span><?= $worklist->created ?></span>
+                            <span><?= $worklist->title ?></span>
+                            <input name="id" type="hidden" value="<?= $worklist->id ?>">
+                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+
+                        </a>
+                        <span class="delete">X</span>
+                    </form>
                 </li>
 
             <?php endif; 
@@ -58,8 +78,16 @@ $worklists = $stmt->fetchAll();
                     if($worklist->is_done == 0): /* 未完了 */
             ?>
                 <li>
-                    <span><?= $worklist->created ?></span>
-                    <span><?= $worklist->title ?></span>
+                    <form action="" method="post">  
+                        <a href="#">
+                            <span><?= $worklist->created ?></span>
+                            <span><?= $worklist->title ?></span>
+                            <input name="id" type="hidden" value="<?= $worklist->id ?>">
+                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+
+                        </a>
+                            <span class="delete">X</span>
+                    </form>
                 </li>
 
             <?php endif; 
@@ -69,6 +97,6 @@ $worklists = $stmt->fetchAll();
         </div>
 
     </div>
-
+    <script src="js/main.js"></script>          
 </body>
 </html>
