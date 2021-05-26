@@ -6,19 +6,15 @@ $pdo = getPdoInstance();
 
 createToken();
 
-$stmt = $pdo->query("SELECT * FROM worklists");
-$worklists = $stmt->fetchAll();
+$worklists = getTodo($pdo); /* フォルダ内で作成された記録のみ表示 */
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
-    validateToken();
+        validateToken();
+        deleteTodo($pdo);
+        header('Location: http://localhost:8562/list.php');
+        exit;
+    }
     
-    deleteTodo($pdo);
-    header('Location: http://localhost:8562/list.php');
-    exit;
-
-
-}
 ?>
 
 
@@ -34,6 +30,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </head>
 <body>
     <div class="header-list">
+        <a href="reset.php">トップ画面へ</a>
+    </div class="header-list">
+    <div class="main-list">
         <div class="current_folder">
             <p>現在開いているフォルダが表示されます</p>
         </div>
@@ -42,60 +41,59 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <button>メモ作成</button>
             </a>
         </div>
-    </div class="header-list">
-    <div class="record">
+        <div class="record">
 
-        <div class="complete-list">
-            <p>完了した記録の表示領域</p>
-            <ul>
-            <?php foreach($worklists as $worklist): 
-                    if($worklist->is_done == 1):  /* 完了 */
-            ?>
-                <li>
-                    <form action="" method="post">
-                        <a href="#">
-                            <span><?= $worklist->created ?></span>
-                            <span><?= $worklist->title ?></span>
-                            <input name="id" type="hidden" value="<?= $worklist->id ?>">
-                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-
-                        </a>
-                        <span class="delete">X</span>
-                    </form>
-                </li>
-
-            <?php endif; 
-            endforeach;
-            ?>
-            </ul>
-            
-        </div>
-    
-        <div class="doing-list">
-            <p>未完了の記録の表示領域</p>
-            <ul>
-            <?php foreach($worklists as $worklist): 
-                    if($worklist->is_done == 0): /* 未完了 */
-            ?>
-                <li>
-                    <form action="" method="post">  
-                        <a href="#">
-                            <span><?= $worklist->created ?></span>
-                            <span><?= $worklist->title ?></span>
-                            <input name="id" type="hidden" value="<?= $worklist->id ?>">
-                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-
-                        </a>
+            <div class="complete-list">
+                <p>完了した記録の表示領域</p>
+                <ul>
+                <?php foreach($worklists as $worklist): 
+                        if($worklist->is_done == 1):  /* 完了 */
+                ?>
+                    <li>
+                        <form action="" method="post">
+                            <a href="#">
+                                <span><?= $worklist->created ?></span>
+                                <span><?= $worklist->title ?></span>
+                                <input name="id" type="hidden" value="<?= $worklist->id ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                            </a>
                             <span class="delete">X</span>
-                    </form>
-                </li>
+                        </form>
+                    </li>
 
-            <?php endif; 
-            endforeach;
-            ?>
-            </ul>
+                <?php endif; 
+                endforeach;
+                ?>
+                </ul>
+                
+            </div>
+        
+            <div class="doing-list">
+                <p>未完了の記録の表示領域</p>
+                <ul>
+                <?php foreach($worklists as $worklist): 
+                        if($worklist->is_done == 0): /* 未完了 */
+                            ?>
+                    <li>
+                        <form action="" method="post">  
+                            <a href="#">
+                                <span><?= $worklist->created ?></span>
+                                <span><?= $worklist->title ?></span>
+                                <input name="id" type="hidden" value="<?= $worklist->id ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+
+                            </a>
+                                <span class="delete">X</span>
+                        </form>
+                    </li>
+
+                <?php endif; 
+                endforeach;
+                ?>
+                </ul>
+            </div>
+
         </div>
-
     </div>
     <script src="js/main.js"></script>          
 </body>

@@ -1,8 +1,33 @@
 <?php
 
+require_once('../app/config.php');
+
+createToken();
+
+
+/* フォルダナンバーを受け取る */
+/* セッションで情報を保持 */
+if(empty($_SESSION['folderNo'])){  /* クリックされたフォルダのフォルダナンバーを受け取る */
+$_SESSION['folderNo'] = (filter_input(INPUT_POST,'folderNo'));
+}
+
+
+// $folderNo = $_SESSION['folderNo']; //クリックしたフォルダナンバーを受け取れているか
+// echo $folderNo;
+
+
+
+
+
+
+
+
+
 const FILENAME = '../app/folder.txt';
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if($_SERVER['REQUEST_METHOD'] === 'POST'){ /* フォルダナンバーを１増やす */
+    
+    
     $icon = filter_input(INPUT_POST,'icon');  /* <i class='fas fa-folder fa-3x'></i>を受け取る */
     $fp = fopen(FILENAME,'a'); /* テキストファイルを追記モードで開く */
     fwrite($fp,$icon.PHP_EOL); /* テキストファイルに追記*/
@@ -12,6 +37,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 }
 
 $folders = file(FILENAME,FILE_IGNORE_NEW_LINES);  /* テキストファイルの内容を配列で取得 */
+
+
+
 ?>
 
 
@@ -35,18 +63,28 @@ $folders = file(FILENAME,FILE_IGNORE_NEW_LINES);  /* テキストファイルの
 
     <div class="doing-top">
         <p>作業途中の仕事</p>
+    <?php
+
+    $number = 0;
+
+    ?>
+    <?php foreach($folders as $folder): $number++ ?>   <!-- フォルダナンバーを付与 -->
         <form action="" method="post">
-            <?php foreach($folders as $folder): ?>
-            
-            <a href="list.php">
-                <?php echo $folder; ?>
-            </a> <!-- 配列の中のアイコンを表示 -->
-            <?php endforeach?>
+            <?= $folder; ?>
+            <input type="hidden" name="folderNo" value="<?= $number; ?>">
+            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         </form>
+    <?php endforeach;?>
     </div>
 
     <div class="complete-top">
         <p>完了した仕事</p>
     </div>
+
+    <script>
+        var folderNo = <?= $_SESSION['folderNo']; ?> //javascriptセッションを渡す
+    </script>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
