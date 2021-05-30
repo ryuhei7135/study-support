@@ -10,10 +10,8 @@ Class textClam{
         $this->postName = $postName;
 
     }
-    
-        
-    
 
 }
+
 
 ?>

@@ -53,7 +53,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <form action="" method="post"> <!-- サーバにデータを送信 -->
             <div class="problem">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-            <?php foreach($problems as $problem): ?>
+            <?php foreach($problems as $problem): ?> <!-- 問題を記述するエリア -->
                 <div class="<?php echo $problem->className; ?>">
                     <span><?php echo $problem->title;?></span>
                     <textarea name="<?= $problem->postName; ?>" cols="30" rows="1"></textarea>
@@ -63,7 +63,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             </div>
         
             <div class="solution">
-                <?php foreach($solutions as $solution): ?>
+                <?php foreach($solutions as $solution): ?> <!-- 対応を記述するエリア -->
                     <div class="<?php echo $solution->className; ?>">
                         <span><?php echo $solution->title;?></span>
                         <textarea name="<?= $solution->postName; ?>" cols="30" rows="1"></textarea>
@@ -81,3 +81,4 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
 </body>
 </html>
+
