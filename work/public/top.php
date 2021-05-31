@@ -9,13 +9,16 @@ const FILENAME = '../app/folder.txt';
 $action = filter_input(INPUT_GET,'action');
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    validateToken();
+
     switch ($action){
         case 'createFolder': /* 「フォルダを作る」が押下されたとき */
-            validateToken();
+            // validateToken();
             createFolders();
             break;
         case 'getFolderNo': /* フォルダがクリックされたとき */
-            validateToken();
+            // validateToken();
             $number = getFolderNo();
             break;
     

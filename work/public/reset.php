@@ -3,7 +3,7 @@ session_start();
 
 
 
-//「一覧へ戻る」を押したときの処理
+//一覧画面へ戻る
 if(isset($_SESSION['allRecords']) && isset($_COOKIE['folderNo'])){
 
     session_unset($_SESSION['allRecord']); 
@@ -14,7 +14,7 @@ if(isset($_SESSION['allRecords']) && isset($_COOKIE['folderNo'])){
 }
 
 
-    //「トップへ戻る」を押したとき
+    //トップ画面へ戻る
 if(isset($_COOKIE['folderNo']) && empty($_SESSION['allRecords'])){
 
     setcookie('folderNo',""); 

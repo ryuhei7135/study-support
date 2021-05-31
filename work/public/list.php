@@ -19,7 +19,7 @@ $worklists = getTodo($pdo); /* フォルダ内で作成された記録のみ表�
 
 
 if(isset($_COOKIE['folderNo'])){
-    echo ($_COOKIE['folderNo']);
+    echo '開いているフォルダ番号:'.$_COOKIE['folderNo'];
 }else{
     echo 'allRecordだけではなくfolderNoも削除されてしまっているのでリストが表示されていません';
 }
@@ -111,9 +111,7 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
                     <?php if($worklist->is_done == 0): ?> <!-- /* 未完了 */ -->
                     <li>
                         <form action="" method="post">  
-                            <span class="lists"><?= $worklist->created; ?><?= $worklist->title; ?></span> <!-- 記録時間 タイトル -->
-                            <span><?= $worklist->created ?></span>
-                            <span><?= $worklist->pro_summary ?></span>
+                            <span class="lists"><?= $worklist->created; ?><?= $worklist->pro_summary; ?></span> <!-- 記録時間 タイトル -->
                             <input name="id" type="hidden" value="<?= $worklist->id ?>">
                             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                             <span class="delete">X</span>
