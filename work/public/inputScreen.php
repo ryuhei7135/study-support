@@ -4,15 +4,15 @@ require_once('../app/data.php');
 
 require_once('../app/config.php');
 
-createToken();
+Token::create();
 
-$pdo = getPdoInstance();
+$pdo = Database::getInstance();
 
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    validateToken();
+    Token::validate();
     
-    addTodo($pdo);
+    Todo::add($pdo);
 
     header('Location:http://localhost:8562/list.php');
     exit;
@@ -81,4 +81,3 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
 </body>
 </html>
-

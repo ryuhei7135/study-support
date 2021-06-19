@@ -2,16 +2,17 @@
 
 require_once('../app/config.php');
 
-$pdo = getPdoInstance();
+$pdo = Database::getInstance();
 
-createToken();
+Token::create();
 
 
-$worklists = getTodo($pdo); /* フォルダ内で作成された記録のみ表示 */
+
+$worklists = Todo::get($pdo); /* フォルダ内で作成された記録のみ表示 */
 
 // if($_SERVER['REQUEST_METHOD'] === 'POST'){
 //         validateToken();
-//         deleteTodo($pdo);
+//         Todo::delete($pdo);
 //         header('Location: http://localhost:8562/list.php');
 //         exit;
 //     }

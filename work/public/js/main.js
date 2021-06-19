@@ -4,7 +4,10 @@
     const deletes = document.querySelectorAll('.delete'); /* バツボタン */
     const folders = document.querySelectorAll('i'); /* フォルダ */
     const lists = document.querySelectorAll('.lists'); /* 一覧画面に表示されているリスト */
-    
+    const makeFolderButton = document.querySelector('#makeFolderButton');
+    const icon = document.querySelector('[name="icon"]'); //<i class='fas fa-folder fa-3x'></i>
+    const token = document.querySelector('[name="token"]');
+
     deletes.forEach((span)=>{
         span.addEventListener('click',()=>{
             if(confirm('本当に削除しますか？')){
@@ -38,6 +41,37 @@
     }else{
         console.log('表示する記録がセットされていません');
     }
+
+    /* フォルダ作成 */
+    /* 非同期でフォルダを作ることに成功したが、リロードしないと表示されないのでDOM操作で予めフォルダを作っておく処理が必要 */
+    makeFolderButton.addEventListener('click',()=>{
+        fetch('?action=makeFolder',{
+            method:'POST',
+            body: new URLSearchParams({
+                icon: icon.value,
+                token: token.value
+            })
+        })
+        /* フォルダは作られるがリロードしないと表示されないので前もって作っておく */
+        const i = document.createElement('i');
+        i.classList.add("fas","fa-folder","fa-3x");
+        document.querySelector('.doing-top').appendChild(i);
+    });
+
+
+
+    $(function(){
+
+        $('#makeFolderButton').click(function (){
+            $('#modal').fadeIn();
+        })
+
+        
+     });
+
+
+
+
 
 
 }

@@ -2,9 +2,9 @@
 
 require_once('../app/config.php');
 
-createToken();
+Token::create();
 
-$pdo = getPdoInstance();
+$pdo = Database::getInstance();
 
 $allRecords = $_SESSION['allRecords'];
 
@@ -30,8 +30,8 @@ $allRecords = $_SESSION['allRecords'];
 
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    validateToken();
-    updateTodo($pdo);
+    Token::validate();
+    Todo::update($pdo);
     
     header('Location:http://localhost:8562/reset.php');
     exit;
@@ -107,4 +107,3 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 </body>
 </html>
-

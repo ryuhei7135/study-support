@@ -2,10 +2,10 @@
 
 require_once('../app/config.php');
 
-createToken();
+Token::create();
 
-$pdo = getPdoInstance();
 
+$pdo = Database::getInstance();
 $allRecords = $_SESSION['allRecords'];
 
 
@@ -102,4 +102,3 @@ if(isset($_SESSION['id'])){
 
 </body>
 </html>
-
