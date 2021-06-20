@@ -100,7 +100,18 @@ class Todo{
         $stmt = $pdo->prepare("DELETE FROM worklists WHERE id = :id");
         $stmt->bindValue('id',$id,PDO::PARAM_INT);
         $stmt->execute();
-    
+        header('Location: http://localhost:8562/list.php'); /* DBからは削除されているがリロードしないと画面からは消えないので書いた */
+    }
+
+    public static function viewRecord($pdo){
+        if(empty($_SESSION['id'])){ 
+            $_SESSION['id'] = filter_input(INPUT_POST,'id');
+        }
+        
+        $stmt = $pdo->prepare("SELECT * FROM worklists WHERE id = :id");
+        $stmt->execute(['id'=>$_SESSION['id']]);
+        $_SESSION['allRecords'] = $stmt->fetchAll(); /* クリックされたリストの記録 */
+        return $_SESSION['allRecords'];
     }
 
 

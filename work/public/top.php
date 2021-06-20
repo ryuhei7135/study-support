@@ -17,11 +17,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     switch ($action){
         case 'makeFolder': /* 「フォルダを作る」が押下されたとき */
-            // validateToken();
             Folder::make();
             break;
         case 'getFolderNo': /* フォルダがクリックされたとき */
-            // validateToken();
             $number = Folder::getNumber();
             break;
         case 'getFolderName':
@@ -79,7 +77,9 @@ if(isset($_COOKIE['folderNo'])){
         <?php foreach($folders as $folder): ?>   
         <form action="?action=getFolderNo" method="post">
             <?= $folder; ?>
-            <input type="hidden" name="folderNo" value="<?= $i; ?>"><!-- フォルダナンバーを付与 -->
+            <!-- フォルダナンバーを付与 -->
+            <!-- フォルダ名をDBから取得するロジックが完成すれば、list.phpでフォルダ名でフィルターをかけて記録を取得するのでフォルダナンバーはいらなくなる -->
+            <input type="hidden" name="folderNo" value="<?= $i; ?>">
             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         </form>
         <p><?= $folderNames[$i] ?></p> <!-- DBのfolderNameから表示したほうが綺麗だが、フォルダ名を挿入してしまうと、inputScreen.phpのaddTodosで別レコードに記録が挿入されてしまうのでこうなった。とはいえDBから取ってくるロジックに直したほうがいい -->

@@ -17,6 +17,26 @@ $worklists = Todo::get($pdo); /* フォルダ内で作成された記録のみ�
 //         exit;
 //     }
 
+$action = filter_input(INPUT_GET,'action');
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+    Token::validate();
+
+
+    switch ($action){
+        case 'viewRecord': 
+            $_SESSION['allRecords'] = Todo::viewRecord($pdo);
+            break;
+        case 'delete': 
+            Todo::delete($pdo);
+            break;
+        
+    
+    }
+
+}
+
 
 
 if(isset($_COOKIE['folderNo'])){
@@ -26,16 +46,6 @@ if(isset($_COOKIE['folderNo'])){
 }
 
 
-if(empty($_SESSION['id'])){ 
-    $_SESSION['id'] = filter_input(INPUT_POST,'id');
-}
-
-
-
-
-$stmt = $pdo->prepare("SELECT * FROM worklists WHERE id = :id");
-$stmt->execute(['id'=>$_SESSION['id']]);
-$_SESSION['allRecords'] = $stmt->fetchAll(); /* クリックされたリストの記録 */
 
 
 
@@ -47,6 +57,8 @@ $_SESSION['allRecords'] = $stmt->fetchAll(); /* クリックされたリスト�
     // // }else{
     // //     var_dump($_SESSION['allRecords']);
     // }
+
+
 if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が入ってきたらページ遷移するという処理だが、入ってこなくてもデフォルトで文字列 ’[]’ が入っていて、ページ遷移してしまう。とりあえす入ってこなかったら中身を辛煮する処理にしてあるが改善の余地がありそう
     $allRecord = '';
 }else{
@@ -90,11 +102,15 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
                         if($worklist->is_done == 1):  /* 完了 */
                 ?>
                     <li >
-                        <form action="" method="post">
+                        <form action="?action=viewRecord" method="post">
                                 <span class="lists"><?= $worklist->created ;?><?= $worklist->pro_summary; ?></span> 
                                 <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
                                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                                <span class="delete">X</span>
+                        </form>
+                        <form action="?action=delete" method="post">
+                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                            <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
+                            <span class="delete">X</span>
                         </form>
                     </li>
 
@@ -111,10 +127,14 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
                 <?php foreach($worklists as $worklist): ?>
                     <?php if($worklist->is_done == 0): ?> <!-- /* 未完了 */ -->
                     <li>
-                        <form action="" method="post">  
-                            <span class="lists"><?= $worklist->created; ?><?= $worklist->pro_summary; ?></span> <!-- 記録時間 タイトル -->
-                            <input name="id" type="hidden" value="<?= $worklist->id ?>">
+                    <form action="?action=viewRecord" method="post">
+                                <span class="lists"><?= $worklist->created ;?><?= $worklist->pro_summary; ?></span> 
+                                <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
+                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                        </form>
+                        <form action="?action=delete" method="post">
                             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                            <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
                             <span class="delete">X</span>
                         </form>
                     </li>
