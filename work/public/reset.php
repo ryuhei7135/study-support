@@ -24,11 +24,4 @@ if(isset($_COOKIE['folderId']) && empty($_SESSION['allRecords'])){
 }
 
 
-// $_SESSION = array(); /* セッションの初期化 */
-
-// setcookie(session_name(),''); /* セッションクッキーの削除 */
-
-// header('Location:http://localhost:8562/top.php');
-
-
 ?>

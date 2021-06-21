@@ -10,12 +10,6 @@ Token::create();
 
 $records = Todo::get($pdo); /* フォルダ内で作成された記録のみ表示 */
 
-// if($_SERVER['REQUEST_METHOD'] === 'POST'){
-//         validateToken();
-//         Todo::delete($pdo);
-//         header('Location: http://localhost:8562/list.php');
-//         exit;
-//     }
 
 $action = filter_input(INPUT_GET,'action');
 
@@ -46,26 +40,11 @@ if(isset($_COOKIE['folderNo'])){
 }
 
 
-
-
-
-
-
-
-    // // if(empty($_SESSION['allRecords'])){
-    // //     echo '内容を取得できていません';
-    // // }else{
-    // //     var_dump($_SESSION['allRecords']);
-    // }
-
-
 if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が入ってきたらページ遷移するという処理だが、入ってこなくてもデフォルトで文字列 ’[]’ が入っていて、ページ遷移してしまう。とりあえす入ってこなかったら中身を辛煮する処理にしてあるが改善の余地がありそう
     $allRecord = '';
 }else{
     $allRecord = json_encode($_SESSION['allRecords']);
 }
-
-// var_dump($allRecord);
 
 ?>
 
@@ -77,6 +56,7 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <title>一覧画面</title>
 </head>
@@ -86,7 +66,7 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
     </div class="header-list">
     <div class="main-list">
         <div class="current_folder">
-            <p>現在開いているフォルダが表示されます</p>
+            <p><?= $_COOKIE['folderName']; ?></p>
         </div>
         <div class="new_memo">
             <a href="./inputScreen.php">

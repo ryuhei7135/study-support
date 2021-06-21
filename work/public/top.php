@@ -5,16 +5,6 @@ $pdo = Database::getInstance();
 
 Token::create();
 
-
-
-// print_r('<pre>');
-// print_r($folders);
-// print_r('</pre>');
-
-// print_r('<pre>');
-// print_r($folderNames);
-// print_r('</pre>');
-
 $stmt = $pdo->query("SELECT * FROM folder");
 $folders = $stmt->fetchAll();
 
@@ -26,8 +16,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
     switch ($action){
-        case 'getFolderId': /* フォルダがクリックされたとき */
+        case 'getFolderProperty': /* フォルダがクリックされたとき */
             $folderId = Folder::getFolderId();
+            $folderName = Folder::getFolderName();
             break;
         case 'makeFolder': /* フォルダ名が入力されたとき */
             Folder::makeFolder($pdo);
@@ -40,16 +31,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     }
 
 }
-
-
-
-
-
-// if(isset($_COOKIE['folderNo'])){
-//     print_r($_COOKIE['folderNo']);
-// }else{
-//     echo 'クッキーのセットに失敗';
-// }
 
 
 ?>
@@ -81,9 +62,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <div class="doing-top">
         <p>作業途中の仕事</p>
         <?php foreach($folders as $folder): ?>   
-        <form action="?action=getFolderId" method="post">
+        <form action="?action=getFolderProperty" method="post">
             <i class='fas fa-folder fa-3x'></i>
             <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
+            <input type="hidden" name="folderName" value="<?= $folder->folder_name; ?>">
             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         </form>
         <p><?= $folder->folder_name; ?></p> 
@@ -102,7 +84,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     </div>
 
     <script>
-        var folderId = <?= $folderId; ?> //javascriptセッションを渡す
+        var folderId = <?= $folderId; ?> 
     </script>
 
     <script src="js/main.js"></script>

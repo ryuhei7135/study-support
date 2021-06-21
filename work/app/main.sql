@@ -25,6 +25,7 @@ INSERT INTO folder (folder_name) VALUES ('chat_app');
 
 
 SELECT * FROM record\G
+SELECT * FROM folder;
 
 INSERT INTO record (folder_id,pro_summary,so_summary,is_done) VALUES (1,'drag&drop','taioutyuu',0);
 INSERT INTO record (folder_id,pro_summary,so_summary,is_done) VALUES (1,'putName','taiousimasita',1);

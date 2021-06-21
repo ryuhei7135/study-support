@@ -21,18 +21,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
 
-
-
-// var_dump($pro_summary); 
-// var_dump($pro_detail); 
-// var_dump($pro_attachment); 
-// var_dump($pro_sosummary); 
-// var_dump($pro_sodetail); 
-// var_dump($so_attachment); 
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,6 +29,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <title>学習記録記入画面</title>
 </head>
 <body>
@@ -78,6 +67,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         </form>
 
     </div>
-    
+
+
+    <script src="js/main.js"></script>
 </body>
 </html>

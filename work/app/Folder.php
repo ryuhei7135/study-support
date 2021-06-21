@@ -11,6 +11,12 @@ class Folder{
     
     }
 
+    public static function getFolderName(){
+        $folderName = filter_input(INPUT_POST,'folderName');
+        setcookie('folderName',$folderName);
+        return $folderName;
+    }
+
     
 
     public static function deleteFolder($pdo){

@@ -10,25 +10,6 @@ $allRecords = $_SESSION['allRecords'];
 
 
 
-// if(empty($allRecords)){
-//     echo '内容を取得できていません';
-// }else{
-//     print_r($allRecords);
-// }
-
-// if(isset($_SESSION['allRecords'])){
-//     echo 'allRecordsがセットされています<br />';
-// }else{
-//     echo 'allRecordsがセットされていません<br />';
-// }
-
-// if(isset($_SESSION['folderNo'])){
-//     echo 'folderNoがセットされています';
-// }else{
-//     'folderNoがセットされていません';
-// }
-
-
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     Token::validate();
     Todo::update($pdo);
@@ -50,6 +31,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <title>編集画面</title>
 </head>
 <body>
@@ -104,6 +86,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             </div>
         </form>
     </div>
-
+    <script src="js/main.js"></script>
 </body>
 </html>
