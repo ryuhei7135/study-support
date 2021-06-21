@@ -1,30 +1,34 @@
 <?php
 
 class Folder{
-    public static function make(){
-        $icon = filter_input(INPUT_POST,'icon');/* <i class='fas fa-folder fa-3x'></i>を受け取る */
-        $fp = fopen(FOLDER_TXT,'a'); /* テキストファイルを追記モードで開く */
-        fwrite($fp,$icon.PHP_EOL); /* テキストファイルに追記*/
-        fclose($fp);
-        header('Location: http://localhost:8562/top.php');
-        exit;
-    }
+    
 
-    public static function getNumber(){
+    public static function getFolderId(){
 
-        $Number = filter_input(INPUT_POST,'folderNo');
-        setcookie('folderNo',$Number);
-        return $Number;
+        $folderId = filter_input(INPUT_POST,'folderId');
+        setcookie('folderId',$folderId);
+        return $folderId;
     
     }
 
-    public static function getFolderName(){
+    
+
+    public static function deleteFolder($pdo){
+        
+        $folderId = filter_input(INPUT_POST,'folderId');
+        $stmt = $pdo->prepare("DELETE FROM folder WHERE id = :id");
+        $stmt->bindValue('id', $folderId, PDO::PARAM_INT);
+        $stmt->execute();
+        header('Location: http://localhost:8562/top.php'); /* フォルダは削除されているがリロードしないと画面からは消えないので書いた */
+
+    }
+
+    public static function makeFolder($pdo){
         $folderName = filter_input(INPUT_POST,'folderName');
-        $fp = fopen(FOLDER_NAME_TXT,'a'); 
-        fwrite($fp,$folderName.PHP_EOL); 
-        fclose($fp);
-        header('Location: http://localhost:8562/top.php');
-        exit;
+        $stmt = $pdo->prepare("INSERT INTO folder (folder_name) VALUES (:folderName)");
+        $stmt->bindValue('folderName', $folderName, PDO::PARAM_STR);
+        $stmt->execute();
+        header('Location: http://localhost:8562/top.php'); /* フォルダは作られるがリロードしないと表示されないので書いた */
     }
 
 

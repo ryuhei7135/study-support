@@ -70,12 +70,12 @@ if(isset($_SESSION['id'])){
 
                 <div class="box pro_detail">
                     <span>問題詳細:</span>
-                    <p><?= $allRecord->proDetail; ?></p>
+                    <p><?= $allRecord->pro_detail; ?></p>
                 </div>
 
                 <div class="box pro_attachment">
                     <span>添付ファイル:</span>
-                    <p><?= $allRecord->proAttachment; ?></p>
+                    <p><?= $allRecord->pro_attachment; ?></p>
                 </div>
             <?php endforeach; ?>
             </div>
@@ -84,17 +84,17 @@ if(isset($_SESSION['id'])){
             <?php foreach($allRecords as $allRecord): ?>
                 <div class="box pro_sosummary">
                     <span>対処概要:</span>
-                    <p><?= $allRecord->soSummary; ?></p>
+                    <p><?= $allRecord->so_summary; ?></p>
                 </div>
 
                 <div class="box pro_sosummary">
                     <span>対処概要:</span>
-                    <p><?= $allRecord->soDetail; ?></p>
+                    <p><?= $allRecord->so_detail; ?></p>
                 </div>
 
                 <div class="box pro_sosummary">
                     <span>添付ファイル:</span>
-                    <p><?= $allRecord->soAttachment; ?></p>
+                    <p><?= $allRecord->so_attachment; ?></p>
                 </div>
             <?php endforeach; ?>
             </div>

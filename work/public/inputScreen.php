@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         </div>
     </div>
     <div class="main">
-        <form action="" method="post"> <!-- サーバにデータを送信 -->
+        <form action="" method="post"> 
             <div class="problem">
                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
             <?php foreach($problems as $problem): ?> <!-- 問題を記述するエリア -->

@@ -1,12 +1,22 @@
 <?php
 
 require_once('../app/config.php');
+$pdo = Database::getInstance();
 
 Token::create();
 
 
-const FOLDER_TXT = '../app/folder.txt';
-const FOLDER_NAME_TXT = '../app/folderName.txt';
+
+// print_r('<pre>');
+// print_r($folders);
+// print_r('</pre>');
+
+// print_r('<pre>');
+// print_r($folderNames);
+// print_r('</pre>');
+
+$stmt = $pdo->query("SELECT * FROM folder");
+$folders = $stmt->fetchAll();
 
 $action = filter_input(INPUT_GET,'action');
 
@@ -16,30 +26,30 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
     switch ($action){
-        case 'makeFolder': /* 「フォルダを作る」が押下されたとき */
-            Folder::make();
+        case 'getFolderId': /* フォルダがクリックされたとき */
+            $folderId = Folder::getFolderId();
             break;
-        case 'getFolderNo': /* フォルダがクリックされたとき */
-            $number = Folder::getNumber();
+        case 'makeFolder': /* フォルダ名が入力されたとき */
+            Folder::makeFolder($pdo);
             break;
-        case 'getFolderName':
-            Folder::getFolderName();
+        case 'deleteFolder':
+            Folder::deleteFolder($pdo);
+            
             break;
     
     }
 
 }
 
-$folders = file(FOLDER_TXT,FILE_IGNORE_NEW_LINES);  /* テキストファイルの内容を配列で取得 */
-$folderNames = file(FOLDER_NAME_TXT,FILE_IGNORE_NEW_LINES);  /* テキストファイルの内容を配列で取得 */
 
 
 
-if(isset($_COOKIE['folderNo'])){
-    print_r($_COOKIE['folderNo']);
-}else{
-    echo 'クッキーのセットに失敗';
-}
+
+// if(isset($_COOKIE['folderNo'])){
+//     print_r($_COOKIE['folderNo']);
+// }else{
+//     echo 'クッキーのセットに失敗';
+// }
 
 
 ?>
@@ -58,13 +68,11 @@ if(isset($_COOKIE['folderNo'])){
 </head>
 <body>
     <div class="header-top">
-            <input type="hidden" name="icon" value="<i class='fas fa-folder fa-3x'></i>"> <!-- ボタンを押下するとPOST形式で<i class='fas fa-folder fa-3x'></i>が送られる -->
-            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
             <button id="makeFolderButton">フォルダを作る</button>
     </div>
     <div id="modal">
         <span>フォルダ名を入力：</span>
-        <form action="?action=getFolderName" method="post">
+        <form action="?action=makeFolder" method="post">
             <input name="folderName" type="text" placeholder="新しいフォルダ">
             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         </form>
@@ -72,18 +80,18 @@ if(isset($_COOKIE['folderNo'])){
 
     <div class="doing-top">
         <p>作業途中の仕事</p>
-        <?php $i = 0;?>
-
         <?php foreach($folders as $folder): ?>   
-        <form action="?action=getFolderNo" method="post">
-            <?= $folder; ?>
-            <!-- フォルダナンバーを付与 -->
-            <!-- フォルダ名をDBから取得するロジックが完成すれば、list.phpでフォルダ名でフィルターをかけて記録を取得するのでフォルダナンバーはいらなくなる -->
-            <input type="hidden" name="folderNo" value="<?= $i; ?>">
+        <form action="?action=getFolderId" method="post">
+            <i class='fas fa-folder fa-3x'></i>
+            <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         </form>
-        <p><?= $folderNames[$i] ?></p> <!-- DBのfolderNameから表示したほうが綺麗だが、フォルダ名を挿入してしまうと、inputScreen.phpのaddTodosで別レコードに記録が挿入されてしまうのでこうなった。とはいえDBから取ってくるロジックに直したほうがいい -->
-        <?php $i++; ?>
+        <p><?= $folder->folder_name; ?></p> 
+        <form action="?action=deleteFolder" method="post">
+            <span class="folderDelete">X</span>
+            <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
+            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+        </form>
         <?php  endforeach;?>
 
 
@@ -94,7 +102,7 @@ if(isset($_COOKIE['folderNo'])){
     </div>
 
     <script>
-        var folderNo = <?= $number; ?> //javascriptセッションを渡す
+        var folderId = <?= $folderId; ?> //javascriptセッションを渡す
     </script>
 
     <script src="js/main.js"></script>

@@ -7,6 +7,7 @@
     const makeFolderButton = document.querySelector('#makeFolderButton');
     const icon = document.querySelector('[name="icon"]'); //<i class='fas fa-folder fa-3x'></i>
     const token = document.querySelector('[name="token"]');
+    const folderDelete = document.querySelectorAll('.folderDelete');
 
     deletes.forEach((span)=>{
         span.addEventListener('click',()=>{
@@ -16,7 +17,7 @@
         });
     });
 
-    /* フォルダをクリックするとフォルダナンバーを送信 */
+    /* フォルダをクリックするとフォルダIDを送信 */
     folders.forEach(folder => {  
         folder.addEventListener('click',()=>{
             folder.parentNode.submit();
@@ -24,7 +25,7 @@
     });
     
       /* フォルダをクリックすると一覧画面へ遷移 */
-    if(typeof folderNo !== 'undefined'){ 
+    if(typeof folderId !== 'undefined'){ 
         window.location.href = 'http://localhost:8562/list.php';
     }else{
         ;
@@ -44,18 +45,26 @@
 
     /* フォルダ作成 */
     /* 非同期でフォルダを作ることに成功したが、リロードしないと表示されないのでDOM操作で予めフォルダを作っておく処理が必要 */
-    makeFolderButton.addEventListener('click',()=>{
-        fetch('?action=makeFolder',{
-            method:'POST',
-            body: new URLSearchParams({
-                icon: icon.value,
-                token: token.value
-            })
-        })
-        /* フォルダは作られるがリロードしないと表示されないので前もって作っておく */
-        const i = document.createElement('i');
-        i.classList.add("fas","fa-folder","fa-3x");
-        document.querySelector('.doing-top').appendChild(i);
+    // makeFolderButton.addEventListener('click',()=>{
+    //     fetch('?action=makeFolder',{
+    //         method:'POST',
+    //         body: new URLSearchParams({
+    //             icon: icon.value,
+    //             token: token.value
+    //         })
+    //     })
+    //     /* フォルダは作られるがリロードしないと表示されないので前もって作っておく */
+    //     const i = document.createElement('i');
+    //     i.classList.add("fas","fa-folder","fa-3x");
+    //     document.querySelector('.doing-top').appendChild(i);
+    // });
+
+    folderDelete.forEach((fdel)=>{
+        fdel.addEventListener('click',()=>{
+            if(confirm('本当に削除しますか？')){
+                fdel.parentNode.submit();
+            }
+        });
     });
 
 

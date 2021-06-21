@@ -1,34 +1,43 @@
-CREATE TABLE worklists(
+CREATE TABLE folder(
 id INT NOT NULL AUTO_INCREMENT,
-pro_summary TEXT,
-proDetail TEXT,
-proAttachment TEXT,
-soSummary TEXT,
-soDetail TEXT,
-soAttachment TEXT,
-is_done BOOL DEFAULT true,
-created DATETIME DEFAULT NOW(),
-folderNo INT ,
-folderName TEXT,
+folder_name TEXT,
 PRIMARY KEY (id)
 );
 
-INSERT INTO worklists (pro_summary,proDetail,proAttachment,soSummary,soDetail,soAttachment,folderNo) VALUES ('pro_summary','proDetail','proAttachment','soSummary','soDetail','soAttachment',1);
-INSERT INTO worklists (pro_summary,is_done,folderNo) VALUES ("F1",false,1);
-INSERT INTO worklists (pro_summary,folderNo) VALUES ("F2",2);
-INSERT INTO worklists (pro_summary,is_done,folderNo) VALUES ("F2",false,2);
+CREATE TABLE record(
+id INT NOT NULL AUTO_INCREMENT,
+folder_id INT NOT NULL,
+created DATETIME DEFAULT NOW(),
+pro_summary TEXT,
+pro_detail TEXT,
+pro_attachment TEXT,
+so_summary TEXT,
+so_detail TEXT,
+so_attachment TEXT,
+is_done BOOL DEFAULT true,
+PRIMARY KEY (id),
+FOREIGN KEY (folder_id) REFERENCES folder(id)
+    ON DELETE CASCADE
+);
 
-SELECT * FROM worklists\G
-
-INSERT INTO worklists (pro_summary,soSummary,folderNo,folderName) VALUES ('test','test',1,'testfolder');
-INSERT INTO worklists (pro_summary,proDetail,proAttachment,soSummary,soDetail,soAttachment,folderNo,folderName) VALUES ('test','test','test','test','test','test',1,'testfolder2');
-
-DELETE FROM worklists WHERE id =2;
+INSERT INTO folder (folder_name) VALUES ('study_support');
+INSERT INTO folder (folder_name) VALUES ('chat_app');
 
 
+SELECT * FROM record\G
+
+INSERT INTO record (folder_id,pro_summary,so_summary,is_done) VALUES (1,'drag&drop','taioutyuu',0);
+INSERT INTO record (folder_id,pro_summary,so_summary,is_done) VALUES (1,'putName','taiousimasita',1);
+INSERT INTO record (folder_id,pro_summary,so_summary,is_done) VALUES (2,'tolkgahyoujisarenai','taioutyuu',0);
+INSERT INTO record (folder_id,pro_summary,so_summary,is_done) VALUES (2,'soushinnsyagawakaranai','taioushimasia',1);
+
+DELETE FROM worklists;
 
 
-DROP TABLE worklists;
+
+
+DROP TABLE folder;
+DROP TABLE record;
 
 
 

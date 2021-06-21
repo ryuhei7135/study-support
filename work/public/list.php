@@ -8,7 +8,7 @@ Token::create();
 
 
 
-$worklists = Todo::get($pdo); /* フォルダ内で作成された記録のみ表示 */
+$records = Todo::get($pdo); /* フォルダ内で作成された記録のみ表示 */
 
 // if($_SERVER['REQUEST_METHOD'] === 'POST'){
 //         validateToken();
@@ -25,10 +25,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 
     switch ($action){
-        case 'viewRecord': 
+        case 'viewRecord': /* リストがクリックされたとき */
             $_SESSION['allRecords'] = Todo::viewRecord($pdo);
             break;
-        case 'delete': 
+        case 'delete': /* バツがクリックされたとき */
             Todo::delete($pdo);
             break;
         
@@ -98,18 +98,18 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
             <div class="complete-list">
                 <p>完了した記録の表示領域</p>
                 <ul>
-                <?php foreach($worklists as $worklist): 
-                        if($worklist->is_done == 1):  /* 完了 */
+                <?php foreach($records as $record): 
+                        if($record->is_done == 1):  /* 完了 */
                 ?>
                     <li >
                         <form action="?action=viewRecord" method="post">
-                                <span class="lists"><?= $worklist->created ;?><?= $worklist->pro_summary; ?></span> 
-                                <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
+                                <span class="lists"><?= $record->created ;?><?= $record->pro_summary; ?></span> 
+                                <input name="id" type="hidden" value="<?= $record->id ?>"> 
                                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         </form>
                         <form action="?action=delete" method="post">
                             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                            <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
+                            <input name="id" type="hidden" value="<?= $record->id ?>"> 
                             <span class="delete">X</span>
                         </form>
                     </li>
@@ -124,17 +124,17 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
             <div class="doing-list">
                 <p>未完了の記録の表示領域</p>
                 <ul>
-                <?php foreach($worklists as $worklist): ?>
-                    <?php if($worklist->is_done == 0): ?> <!-- /* 未完了 */ -->
+                <?php foreach($records as $record): ?>
+                    <?php if($record->is_done == 0): ?> <!-- /* 未完了 */ -->
                     <li>
                     <form action="?action=viewRecord" method="post">
-                                <span class="lists"><?= $worklist->created ;?><?= $worklist->pro_summary; ?></span> 
-                                <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
+                                <span class="lists"><?= $record->created ;?><?= $record->pro_summary; ?></span> 
+                                <input name="id" type="hidden" value="<?= $record->id ?>"> 
                                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         </form>
                         <form action="?action=delete" method="post">
                             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                            <input name="id" type="hidden" value="<?= $worklist->id ?>"> 
+                            <input name="id" type="hidden" value="<?= $record->id ?>"> 
                             <span class="delete">X</span>
                         </form>
                     </li>

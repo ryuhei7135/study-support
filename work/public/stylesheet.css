@@ -98,7 +98,8 @@
     color: #FFFF66;
 }
 
-.delete {
+.delete,
+.folderDelete {
     color: #ccc;
     cursor: pointer;
   }

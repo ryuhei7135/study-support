@@ -70,12 +70,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
                 <div class="box pro_detail">
                     <span>問題詳細:</span>
-                    <textarea name="pro_detail" id="" cols="30" rows="1"><?= $allRecord->proDetail; ?></textarea>
+                    <textarea name="pro_detail" id="" cols="30" rows="1"><?= $allRecord->pro_detail; ?></textarea>
                 </div>
 
                 <div class="box pro_attachment">
                     <span>添付ファイル:</span>
-                    <textarea name="pro_attachment" id="" cols="30" rows="1"><?= $allRecord->proAttachment; ?></textarea>
+                    <textarea name="pro_attachment" id="" cols="30" rows="1"><?= $allRecord->pro_attachment; ?></textarea>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -84,17 +84,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <?php foreach($allRecords as $allRecord): ?>
                 <div class="box pro_sosummary">
                     <span>対処概要:</span>
-                    <textarea name="pro_sosummary" id="" cols="30" rows="1"><?= $allRecord->soSummary; ?></textarea>
+                    <textarea name="so_summary" id="" cols="30" rows="1"><?= $allRecord->so_summary; ?></textarea>
                 </div>
 
                 <div class="box pro_sosummary">
-                    <span>対処概要:</span>
-                    <textarea name="pro_sodetail" id="" cols="30" rows="1"><?= $allRecord->soDetail; ?></textarea>
+                    <span>対処詳細:</span>
+                    <textarea name="so_detail" id="" cols="30" rows="1"><?= $allRecord->so_detail; ?></textarea>
                 </div>
 
                 <div class="box pro_sosummary">
                     <span>添付ファイル:</span>
-                    <textarea name="so_attachment" id="" cols="30" rows="1"><?= $allRecord->soAttachment; ?></textarea>
+                    <textarea name="so_attachment" id="" cols="30" rows="1"><?= $allRecord->so_attachment; ?></textarea>
                 </div>
                 <?php endforeach; ?>                                            
             </div>
