@@ -59,28 +59,29 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         </form>
     </div>
 
-    <div class="doing-top">
-        <p>作業途中の仕事</p>
-        <?php foreach($folders as $folder): ?>   
-        <form action="?action=getFolderProperty" method="post">
-            <i class='fas fa-folder fa-3x'></i>
-            <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
-            <input type="hidden" name="folderName" value="<?= $folder->folder_name; ?>">
-            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-        </form>
-        <p><?= $folder->folder_name; ?></p> 
-        <form action="?action=deleteFolder" method="post">
-            <span class="folderDelete">X</span>
-            <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
-            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-        </form>
+    <div class="folderArea">
+        <?php foreach($folders as $folder): ?>  
+        <div class="folder">
+            <div class="folderIcon">
+                <form action="?action=getFolderProperty" method="post">
+                    <i class='fas fa-folder fa-3x'></i>
+                    <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
+                    <input type="hidden" name="folderName" value="<?= $folder->folder_name; ?>">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                </form>
+            </div>
+            <div class="folderName">
+                <p><?= $folder->folder_name; ?></p> 
+            </div>
+            <div class="folderDeleteButton">
+                <form action="?action=deleteFolder" method="post">
+                    <span class="folderDelete">X</span>
+                    <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                </form>
+            </div>
+        </div>
         <?php  endforeach;?>
-
-
-    </div>
-
-    <div class="complete-top">
-        <p>完了した仕事</p>
     </div>
 
     <script>

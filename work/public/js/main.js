@@ -5,15 +5,23 @@
     const folders = document.querySelectorAll('i'); /* フォルダ */
     const lists = document.querySelectorAll('.lists'); /* 一覧画面に表示されているリスト */
     const makeFolderButton = document.querySelector('#makeFolderButton');
-    const icon = document.querySelector('[name="icon"]'); //<i class='fas fa-folder fa-3x'></i>
-    const token = document.querySelector('[name="token"]');
-    const folderDelete = document.querySelectorAll('.folderDelete');
-
-    deletes.forEach((span)=>{
-        span.addEventListener('click',()=>{
-            if(confirm('本当に削除しますか？')){
-                span.parentNode.submit();
+    const icons = document.querySelectorAll('[name="icon"]'); //<i class='fas fa-folder fa-3x'></i>
+    const foldersDelete = document.querySelectorAll('.folderDelete');
+    
+    deletes.forEach(span => {
+        span.addEventListener('click',()=> {
+            if(!confirm('本当に削除しますか？')){    
+                return;
             }
+
+            fetch('?action=delete',{
+                method:'POST',
+                body: new URLSearchParams({
+                    recordId:span.dataset.recordId,
+                    token:span.dataset.token,
+                }),
+            });
+            span.parentNode.remove();
         });
     });
 
@@ -59,10 +67,10 @@
     //     document.querySelector('.doing-top').appendChild(i);
     // });
 
-    folderDelete.forEach((fdel)=>{
-        fdel.addEventListener('click',()=>{
+    foldersDelete.forEach((folderDelete)=>{
+        folderDelete.addEventListener('click',()=>{
             if(confirm('本当に削除しますか？')){
-                fdel.parentNode.submit();
+                folderDelete.parentNode.submit();
             }
         });
     });
@@ -89,10 +97,5 @@
 
         
      });
-
-
-
-
-
 
 }

@@ -81,17 +81,13 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
                 <?php foreach($records as $record): 
                         if($record->is_done == 1):  /* 完了 */
                 ?>
-                    <li >
+                    <li>
                         <form action="?action=viewRecord" method="post">
                                 <span class="lists"><?= $record->created ;?><?= $record->pro_summary; ?></span> 
-                                <input name="id" type="hidden" value="<?= $record->id ?>"> 
+                                <input name="recordId" type="hidden" value="<?= $record->id ?>"> 
                                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                         </form>
-                        <form action="?action=delete" method="post">
-                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                            <input name="id" type="hidden" value="<?= $record->id ?>"> 
-                            <span class="delete">X</span>
-                        </form>
+                        <span class="delete" data-record-id="<?= $record->id ?>" data-token="<?= $_SESSION['token'] ?>">X</span>
                     </li>
 
                 <?php endif; 
@@ -109,14 +105,10 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
                     <li>
                     <form action="?action=viewRecord" method="post">
                                 <span class="lists"><?= $record->created ;?><?= $record->pro_summary; ?></span> 
-                                <input name="id" type="hidden" value="<?= $record->id ?>"> 
+                                <input name="recordId" type="hidden" value="<?= $record->id ?>"> 
                                 <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                        </form>
-                        <form action="?action=delete" method="post">
-                            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                            <input name="id" type="hidden" value="<?= $record->id ?>"> 
-                            <span class="delete">X</span>
-                        </form>
+                    </form>
+                    <span class="delete" data-record-id="<?= $record->id ?>" data-token="<?= $_SESSION['token'] ?>">X</span>
                     </li>
 
                     <?php endif;?> 

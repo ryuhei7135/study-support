@@ -15,8 +15,8 @@ if(isset($_SESSION['allRecords'])){
 }
 
 
-if(isset($_SESSION['id'])){
-    echo 'クリックされたリストのID：'.$_SESSION['id'];
+if(isset($_SESSION['recordId'])){
+    echo 'クリックされたリストのID：'.$_SESSION['recordId'];
 }else{
     'idがセットされていません';
 }

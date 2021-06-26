@@ -47,17 +47,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <?php foreach($allRecords as $allRecord): ?>
                 <div class="box pro_summary">
                     <span>問題概要:</span>
-                    <textarea name="pro_summary" id="" cols="30" rows="1"><?= $allRecord->pro_summary; ?></textarea>
+                    <textarea name="pro_summary" cols="30" rows="1"><?= $allRecord->pro_summary; ?></textarea>
                 </div>
 
                 <div class="box pro_detail">
                     <span>問題詳細:</span>
-                    <textarea name="pro_detail" id="" cols="30" rows="1"><?= $allRecord->pro_detail; ?></textarea>
+                    <textarea name="pro_detail" cols="30" rows="1"><?= $allRecord->pro_detail; ?></textarea>
                 </div>
 
                 <div class="box pro_attachment">
                     <span>添付ファイル:</span>
-                    <textarea name="pro_attachment" id="" cols="30" rows="1"><?= $allRecord->pro_attachment; ?></textarea>
+                    <textarea name="pro_attachment" cols="30" rows="1"><?= $allRecord->pro_attachment; ?></textarea>
                 </div>
                 <?php endforeach; ?>
             </div>
@@ -66,17 +66,17 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <?php foreach($allRecords as $allRecord): ?>
                 <div class="box pro_sosummary">
                     <span>対処概要:</span>
-                    <textarea name="so_summary" id="" cols="30" rows="1"><?= $allRecord->so_summary; ?></textarea>
+                    <textarea name="so_summary" cols="30" rows="1"><?= $allRecord->so_summary; ?></textarea>
                 </div>
 
                 <div class="box pro_sosummary">
                     <span>対処詳細:</span>
-                    <textarea name="so_detail" id="" cols="30" rows="1"><?= $allRecord->so_detail; ?></textarea>
+                    <textarea name="so_detail" cols="30" rows="1"><?= $allRecord->so_detail; ?></textarea>
                 </div>
 
                 <div class="box pro_sosummary">
                     <span>添付ファイル:</span>
-                    <textarea name="so_attachment" id="" cols="30" rows="1"><?= $allRecord->so_attachment; ?></textarea>
+                    <textarea name="so_attachment" cols="30" rows="1"><?= $allRecord->so_attachment; ?></textarea>
                 </div>
                 <?php endforeach; ?>                                            
             </div>

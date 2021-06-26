@@ -87,29 +87,28 @@ class Todo{
         $stmt->bindValue('update_so_summary',$update_so_summary, PDO::PARAM_STR);
         $stmt->bindValue('update_so_detail', $update_so_detail, PDO::PARAM_STR);
         $stmt->bindValue('update_so_attachment',$update_so_attachment, PDO::PARAM_STR);
-        $stmt->bindValue('id', $_SESSION['id'], PDO::PARAM_INT);
+        $stmt->bindValue('id', $_SESSION['recordId'], PDO::PARAM_INT);
         $stmt->execute();
     
     }
 
     public static function delete($pdo){
-        $id = filter_input(INPUT_POST,'id');
-        if(empty($id)){
+        $recordId = filter_input(INPUT_POST,'recordId');
+        if(empty($recordId)){
             return;
         }
-        $stmt = $pdo->prepare("DELETE FROM record WHERE id = :id");
-        $stmt->bindValue('id',$id,PDO::PARAM_INT);
+        $stmt = $pdo->prepare("DELETE FROM record WHERE id = :recordId");
+        $stmt->bindValue('recordId',$recordId,PDO::PARAM_INT);
         $stmt->execute();
-        header('Location: http://localhost:8562/list.php'); /* DBからは削除されているがリロードしないと画面からは消えないので書いた */
     }
 
     public static function viewRecord($pdo){
-        if(empty($_SESSION['id'])){ 
-            $_SESSION['id'] = filter_input(INPUT_POST,'id');
+        if(empty($_SESSION['recordId'])){ 
+            $_SESSION['recordId'] = filter_input(INPUT_POST,'recordId');
         }
         
         $stmt = $pdo->prepare("SELECT * FROM record WHERE id = :id");
-        $stmt->execute(['id'=>$_SESSION['id']]);
+        $stmt->execute(['id'=>$_SESSION['recordId']]);
         $_SESSION['allRecords'] = $stmt->fetchAll(); /* クリックされたリストの記録 */
         return $_SESSION['allRecords'];
     }
