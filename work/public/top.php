@@ -5,7 +5,7 @@ $pdo = Database::getInstance();
 
 Token::create();
 
-$stmt = $pdo->query("SELECT * FROM folder");
+$stmt = $pdo->query("SELECT * FROM folders");
 $folders = $stmt->fetchAll();
 
 $action = filter_input(INPUT_GET,'action');
@@ -25,12 +25,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             break;
         case 'deleteFolder':
             Folder::deleteFolder($pdo);
-            
             break;
     
     }
 
 }
+
 
 
 ?>
@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <div id="modal">
         <span>フォルダ名を入力：</span>
         <form action="?action=makeFolder" method="post">
-            <input name="folderName" type="text" placeholder="新しいフォルダ">
+            <input name="folderName" type="text" autocomplete="off" placeholder="新しいフォルダ">
             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
         </form>
     </div>
@@ -66,12 +66,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <form action="?action=getFolderProperty" method="post">
                     <i class='fas fa-folder fa-3x'></i>
                     <input type="hidden" name="folderId" value="<?= $folder->id; ?>">
-                    <input type="hidden" name="folderName" value="<?= $folder->folder_name; ?>">
+                    <input type="hidden" name="folderName" value="<?= $folder->name; ?>">
                     <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
                 </form>
             </div>
             <div class="folderName">
-                <p><?= $folder->folder_name; ?></p> 
+                <p><?= $folder->name; ?></p> 
             </div>
             <div class="folderDeleteButton">
                 <form action="?action=deleteFolder" method="post">

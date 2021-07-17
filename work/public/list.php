@@ -6,45 +6,35 @@ $pdo = Database::getInstance();
 
 Token::create();
 
-
-
 $records = Todo::get($pdo); /* フォルダ内で作成された記録のみ表示 */
 
-
 $action = filter_input(INPUT_GET,'action');
-
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     Token::validate();
 
-
     switch ($action){
         case 'viewRecord': /* リストがクリックされたとき */
-            $_SESSION['allRecords'] = Todo::viewRecord($pdo);
+            Record::getRecordId(); /* クッキーで取得 */
+            Record::getRecordTitle(); /* クッキーで取得 */
+            header('Location:http://localhost:8562/view.php');
+            break;
+        case 'addAndEdit':
+            Record::getRecordId(); /* クッキーで取得 */
+            Record::getRecordTitle(); /* クッキーで取得 */
+            header('Location:http://localhost:8562/edit.php');
             break;
         case 'delete': /* バツがクリックされたとき */
             Todo::delete($pdo);
             break;
-        
-    
+        case 'makeRecord':
+            Record::makeRecord($pdo);
+            break;
+            
     }
 
 }
 
-
-
-if(isset($_COOKIE['folderNo'])){
-    echo '開いているフォルダ番号:'.$_COOKIE['folderNo'];
-}else{
-    echo 'allRecordだけではなくfolderNoも削除されてしまっているのでリストが表示されていません';
-}
-
-
-if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が入ってきたらページ遷移するという処理だが、入ってこなくてもデフォルトで文字列 ’[]’ が入っていて、ページ遷移してしまう。とりあえす入ってこなかったら中身を辛煮する処理にしてあるが改善の余地がありそう
-    $allRecord = '';
-}else{
-    $allRecord = json_encode($_SESSION['allRecords']);
-}
 
 ?>
 
@@ -57,72 +47,111 @@ if(empty($_SESSION['allRecords'])){ //リストがクリックされ、情報が
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <title>一覧画面</title>
 </head>
 <body>
     <div class="header-list">
-        <a href="reset.php">トップ画面へ</a>
-    </div class="header-list">
-    <div class="main-list">
         <div class="current_folder">
             <p><?= $_COOKIE['folderName']; ?></p>
         </div>
+        <a href="reset.php">トップ画面へ</a>
         <div class="new_memo">
-            <a href="./inputScreen.php">
-                <button>メモ作成</button>
-            </a>
+                <button id="makeTaskButton">タスク作成</button>
         </div>
-        <div class="record">
-
+    </div class="header-list">
+    <div id="modal">
+        <span>タスク名を入力：</span>
+        <form action="?action=makeRecord" method="post">
+            <input name="recordTitle" type="text" placeholder="実現したいことを入力">
+            <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+        </form>
+    </div>
+    <div class="main-list">
+        <div class="recordArea">
             <div class="complete-list">
                 <p>完了した記録の表示領域</p>
-                <ul>
-                <?php foreach($records as $record): 
-                        if($record->is_done == 1):  /* 完了 */
-                ?>
-                    <li>
-                        <form action="?action=viewRecord" method="post">
-                                <span class="lists"><?= $record->created ;?><?= $record->pro_summary; ?></span> 
-                                <input name="recordId" type="hidden" value="<?= $record->id ?>"> 
-                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                        </form>
-                        <span class="delete" data-record-id="<?= $record->id ?>" data-token="<?= $_SESSION['token'] ?>">X</span>
-                    </li>
-
-                <?php endif; 
-                endforeach;
-                ?>
-                </ul>
-                
+                <table>
+                    <?php foreach($records as $record): 
+                            if($record->is_done == 1):  /* 完了 */
+                    ?>
+                    <tr>
+                        <td>
+                            <form action="?action=viewRecord" method="post">
+                                <div class="record">
+                                    <?= $record->created ;?><?= $record->title; ?>
+                                </div>
+                                <input type="hidden" name="recordId" value="<?= $record->id ?>">
+                                <input type="hidden" name="recordTitle" value="<?= $record->title ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']?>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="?action=addAndEdit" method="post">
+                                <i class="fas fa-edit addAndEdit"></i>
+                                <input type="hidden" name="recordId" value="<?= $record->id ?>">
+                                <input type="hidden" name="recordTitle" value="<?= $record->title ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']?>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="?action=delete" method="post">
+                                <i class="fas fa-trash-alt delete"></i>
+                                <input type="hidden" name="recordId" value="<?= $record->id ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']?>">
+                            </form>
+                        </td>
+                    </tr>
+                        
+                    <?php endif; 
+                    endforeach;
+                    ?>
+                </table>
             </div>
         
             <div class="doing-list">
                 <p>未完了の記録の表示領域</p>
-                <ul>
-                <?php foreach($records as $record): ?>
-                    <?php if($record->is_done == 0): ?> <!-- /* 未完了 */ -->
-                    <li>
-                    <form action="?action=viewRecord" method="post">
-                                <span class="lists"><?= $record->created ;?><?= $record->pro_summary; ?></span> 
-                                <input name="recordId" type="hidden" value="<?= $record->id ?>"> 
-                                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-                    </form>
-                    <span class="delete" data-record-id="<?= $record->id ?>" data-token="<?= $_SESSION['token'] ?>">X</span>
-                    </li>
-
-                    <?php endif;?> 
-                <?php endforeach; ?>
-                </ul>
+                <table>
+                    <?php foreach($records as $record): 
+                            if($record->is_done == 0):  /* 未完了 */
+                    ?>
+                    <tr>
+                        <td>
+                            <form action="?action=viewRecord" method="post">
+                                <div class="record">
+                                    <?= $record->created ;?><?= $record->title; ?>
+                                </div>
+                                <input type="hidden" name="recordId" value="<?= $record->id ?>">
+                                <input type="hidden" name="recordTitle" value="<?= $record->title ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']?>">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="?action=addAndEdit" method="post">
+                                <i class="fas fa-edit addAndEdit"></i>
+                                <input type="hidden" name="recordId" value="<?= $record->id ?>">
+                                <input type="hidden" name="recordTitle" value="<?= $record->title ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']?>">
+                            </form>
+                        </td>
+                        <td>
+                        <td>
+                            <form action="?action=delete" method="post">
+                                <i class="fas fa-trash-alt delete"></i>
+                                <input type="hidden" name="recordId" value="<?= $record->id ?>">
+                                <input type="hidden" name="token" value="<?= $_SESSION['token']?>">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endif; 
+                    endforeach;
+                    ?>
+                </table>
             </div>
 
         </div>
     </div>  
-
-    <script>
-        var allRecord = <?= $allRecord; ?>
-    </script>
-
     <script src="js/main.js"></script>  
 </body>
 </html>

@@ -6,17 +6,23 @@ Token::create();
 
 $pdo = Database::getInstance();
 
-$allRecords = $_SESSION['allRecords'];
+//レコード内で作成されたコンテンツを取得
+$contents = Content::getContent($pdo);//[[id=>1,challenge=>readJSinhead,probrem=>noProces,attachment=>none,record_id=>1],[id=>2,challenge=>readJSinbody,probrem=>success,attachment=>none,record_id=>1]]
+
 
 
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     Token::validate();
-    Todo::update($pdo);
+    
+    Content::addOrUpdate($pdo);
+
+    // $records = Todo::update($pdo);
     
     header('Location:http://localhost:8562/reset.php');
-    exit;
+    // exit;
 }
+
 
 ?>
 
@@ -41,50 +47,52 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         </div>
     </div>
     <div class="main">
+        <div class="recordTitle">
+            <h2><?= $_COOKIE['recordTitle'];?></h2>
+        </div>
         <form action="" method="post">
             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-            <div class="problem"> <!-- textClamクラスを使うとpタグがforeachの中にあるので表示する内容が同じになってしまう。とはいえオブジェクト指向に改善したほうが良い -->
-                <?php foreach($allRecords as $allRecord): ?>
-                <div class="box pro_summary">
-                    <span>問題概要:</span>
-                    <textarea name="pro_summary" cols="30" rows="1"><?= $allRecord->pro_summary; ?></textarea>
-                </div>
-
-                <div class="box pro_detail">
-                    <span>問題詳細:</span>
-                    <textarea name="pro_detail" cols="30" rows="1"><?= $allRecord->pro_detail; ?></textarea>
-                </div>
-
-                <div class="box pro_attachment">
-                    <span>添付ファイル:</span>
-                    <textarea name="pro_attachment" cols="30" rows="1"><?= $allRecord->pro_attachment; ?></textarea>
+            <div class="entryRecordArea"> <!-- foreachを使うとテキストエリアの初期値が同じ内容になってしまう。とはいえオブジェクト指向に改善したほうが良い -->
+                <?php foreach($contents as $content): ?>
+                <div class="entryRecord">
+                    <input type="hidden" name="id[]" value="<?= $content->id; ?>">
+                    <div class="box challenge" id="challenge">
+                        <span>試したこと:</span>
+                        <textarea name="challenge[]" cols="30" rows="1"><?= $content->challenge; ?></textarea>
+                    </div>
+                    <div class="box problem" id="problem">
+                        <span>問題点:</span>
+                        <textarea name="problem[]" cols="30" rows="1"><?= $content->problem; ?></textarea>
+                    </div>
+                    <div class="box attachment" id="attachment">
+                        <span>添付ファイル:</span>
+                        <textarea name="attachment[]" cols="30" rows="1"><?= $content->attachment; ?></textarea>
+                    </div>
                 </div>
                 <?php endforeach; ?>
-            </div>
-        
-            <div class="solution"> <!-- textClamクラスを使うとpタグがforeachの中にあるので表示する内容が同じになってしまう。とはいえオブジェクト指向に改善したほうが良い -->
-                <?php foreach($allRecords as $allRecord): ?>
-                <div class="box pro_sosummary">
-                    <span>対処概要:</span>
-                    <textarea name="so_summary" cols="30" rows="1"><?= $allRecord->so_summary; ?></textarea>
-                </div>
-
-                <div class="box pro_sosummary">
-                    <span>対処詳細:</span>
-                    <textarea name="so_detail" cols="30" rows="1"><?= $allRecord->so_detail; ?></textarea>
-                </div>
-
-                <div class="box pro_sosummary">
-                    <span>添付ファイル:</span>
-                    <textarea name="so_attachment" cols="30" rows="1"><?= $allRecord->so_attachment; ?></textarea>
-                </div>
-                <?php endforeach; ?>                                            
             </div>
             <div class="btn-is">
                 <button name="status" value="done">完了</button>
                 <button name="status" value="notDone">保管</button>
             </div>
         </form>
+        <div class="cloneTarget">
+            <input type="hidden" name="id[]" value="">
+            <div class="box challenge" id="challenge">
+                <span>試したこと:</span>
+                <textarea name="challenge[]" cols="30" rows="1"></textarea>
+            </div>
+            
+            <div class="box problem" id="problem">
+                <span>問題点:</span>
+                <textarea name="problem[]" cols="30" rows="1"></textarea>
+            </div>
+            <div class="box attachment" id="attachment">
+                <span>添付ファイル:</span>
+                <textarea name="attachment[]" cols="30" rows="1"></textarea>
+            </div>
+        </div>
+        <p class="plus">+</p>
     </div>
     <script src="js/main.js"></script>
 </body>

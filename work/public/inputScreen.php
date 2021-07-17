@@ -8,6 +8,8 @@ Token::create();
 
 $pdo = Database::getInstance();
 
+$record = $_SESSION['record'];
+
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     Token::validate();
@@ -34,38 +36,35 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </head>
 <body>
     <div class="header-is">
+        <a href="http://localhost:8562/list.php">一覧画面へ戻る</a>
         <div class="date">
             <p>記入日が表示されます</p>
         </div>
     </div>
     <div class="main">
-        <form action="" method="post"> 
-            <div class="problem">
-                <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
-            <?php foreach($problems as $problem): ?> <!-- 問題を記述するエリア -->
-                <div class="<?php echo $problem->className; ?>">
-                    <span><?php echo $problem->title;?></span>
-                    <textarea name="<?= $problem->postName; ?>" cols="30" rows="1"></textarea>
-                </div>
-            <?php endforeach ?>
-        
-            </div>
-        
-            <div class="solution">
-                <?php foreach($solutions as $solution): ?> <!-- 対応を記述するエリア -->
-                    <div class="<?php echo $solution->className; ?>">
-                        <span><?php echo $solution->title;?></span>
-                        <textarea name="<?= $solution->postName; ?>" cols="30" rows="1"></textarea>
+        <form action="" method="post" class="recordForm">
+                <div class="entryRecordArea">
+                    <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
+                    <div class="box goal" id="goal">
+                        <span>実現したいこと</span>
+                        <textarea name="goal" cols="30" rows="1"></textarea>
                     </div>
-                <?php endforeach ?>
-            </div>
-
+                    <div class="cloneTarget1">
+                        <?php foreach($textboxes as $textbox): ?> 
+                        <div class="<?php echo $textbox->className; ?>" id="<?= $textbox->id;?>">
+                            <span><?php echo $textbox->title;?></span>
+                            <textarea name="<?= $textbox->postName; ?>" cols="30" rows="1"></textarea>
+                        </div>
+                        <input type="hidden" name="recordId" value="<?= $record['id'] ?>">
+                        <?php endforeach ?>
+                    </div>
+                </div>
             <div class="btn-is">
                 <button name="status" value="done">完了</button>
                 <button name="status" value="notDone">保管</button>
             </div>
         </form>
-
+        <p class="plus">+</p>
     </div>
 
 

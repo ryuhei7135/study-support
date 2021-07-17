@@ -31,7 +31,7 @@ class Folder{
 
     public static function makeFolder($pdo){
         $folderName = filter_input(INPUT_POST,'folderName');
-        $stmt = $pdo->prepare("INSERT INTO folder (folder_name) VALUES (:folderName)");
+        $stmt = $pdo->prepare("INSERT INTO folders (`name`) VALUES (:folderName)");
         $stmt->bindValue('folderName', $folderName, PDO::PARAM_STR);
         $stmt->execute();
         header('Location: http://localhost:8562/top.php'); /* フォルダは作られるがリロードしないと表示されないので書いた */
