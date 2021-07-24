@@ -2,6 +2,8 @@
 {
     $(function(){
 
+        // console.log(location.href);
+
         const deletes = document.querySelectorAll('.delete'); /* バツボタン */
         const folders = document.querySelectorAll('i'); /* フォルダ */
         const records = document.querySelectorAll('.record'); /* 一覧画面に表示されているリスト */
@@ -30,7 +32,7 @@
 
         /* フォルダをクリックすると一覧画面へ遷移 */
         if(typeof folderId !== 'undefined'){ 
-            window.location.href = 'http://localhost:8562/list.php';
+            window.location.href = 'http://localhost/study-support/work/public/list.php';
         }else{
         }
 

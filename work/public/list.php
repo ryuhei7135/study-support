@@ -17,12 +17,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         case 'viewRecord': /* リストがクリックされたとき */
             Record::getRecordId(); /* クッキーで取得 */
             Record::getRecordTitle(); /* クッキーで取得 */
-            header('Location:http://localhost:8562/view.php');
+            header('Location: http://localhost/study-support/work/public/view.php');
             break;
         case 'addAndEdit':
             Record::getRecordId(); /* クッキーで取得 */
             Record::getRecordTitle(); /* クッキーで取得 */
-            header('Location:http://localhost:8562/edit.php');
+            header('Location: http://localhost/study-support/work/public/edit.php');
             break;
         case 'delete': /* バツがクリックされたとき */
             Todo::delete($pdo);

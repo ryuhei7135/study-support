@@ -16,7 +16,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     Todo::add($pdo);
 
-    header('Location:http://localhost:8562/list.php');
+    header('Location: http://localhost/study-support/work/public/list.php');
     exit;
 
 }
@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 </head>
 <body>
     <div class="header-is">
-        <a href="http://localhost:8562/list.php">一覧画面へ戻る</a>
+        <a href="list.php">一覧画面へ戻る</a>
         <div class="date">
             <p>記入日が表示されます</p>
         </div>

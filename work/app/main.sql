@@ -17,9 +17,9 @@ ON DELETE CASCADE
 
 CREATE TABLE contents(
 id INT NOT NULL AUTO_INCREMENT,
-challenge TEXT,
-problem TEXT,
-attachment TEXT,
+challenge TEXT NOT NULL,
+problem TEXT NOT NULL,
+attachment VARCHAR(255) UNIQUE,
 record_id INT,
 PRIMARY KEY (id),
 FOREIGN KEY (record_id) REFERENCES records(id)
@@ -38,10 +38,11 @@ INSERT INTO contents (challenge,problem,attachment,record_id) VALUES ('contentId
 INSERT INTO contents (challenge,problem,attachment,record_id) VALUES ('API','success','none',2);
 
 DELETE FROM contents WHERE id>=9;
+DELETE FROM records;
 
 SELECT * FROM folders;
 SELECT * FROM records;
-SELECT * FROM contents;
+SELECT * FROM contents\G
 
 
 

@@ -5,7 +5,7 @@ if(isset($_COOKIE['folderId'],$_COOKIE['folderName'],$_COOKIE['recordId'],$_COOK
     //クッキーのリセット
     setcookie('recordId',''); 
     setcookie('recordTitle',''); 
-    header('Location:http://localhost:8562/list.php');
+    header('Location: http://localhost/study-support/work/public/list.php');
 }
 
 
@@ -14,7 +14,7 @@ if(isset($_COOKIE['folderId'],$_COOKIE['folderName']) && !isset($_COOKIE['record
     //クッキーのリセット
     setcookie('folderId',''); 
     setcookie('folderName',''); 
-    header('Location:http://localhost:8562/top.php');
+    header('Location: http://localhost/study-support/work/public/top.php');
 }
 
 

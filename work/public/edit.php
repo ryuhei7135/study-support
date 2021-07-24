@@ -12,14 +12,18 @@ $contents = Content::getContent($pdo);//[[id=>1,challenge=>readJSinhead,probrem=
 
 
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    Token::validate();
-    
+
+if($_SERVER['REQUEST_METHOD'] === 'POST'){ //完了・保管がクリックされたときの処理
+
+    Token::validate($pdo);
+
+    /* 追加・編集処理 */
     Content::addOrUpdate($pdo);
 
-    // $records = Todo::update($pdo);
+    /* レコードの完了・未完了の切り替え */
+    Record::toggleState($pdo);
     
-    header('Location:http://localhost:8562/reset.php');
+    // header('Location: http://localhost/study-support/work/public/reset.php');
     // exit;
 }
 
@@ -50,10 +54,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         <div class="recordTitle">
             <h2><?= $_COOKIE['recordTitle'];?></h2>
         </div>
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data"> 
             <input type="hidden" name="token" value="<?= $_SESSION['token'] ?>">
             <div class="entryRecordArea"> <!-- foreachを使うとテキストエリアの初期値が同じ内容になってしまう。とはいえオブジェクト指向に改善したほうが良い -->
-                <?php foreach($contents as $content): ?>
+                <?php foreach($contents as $content): ?> <!-- レコード内で作られた記録を表示 -->
                 <div class="entryRecord">
                     <input type="hidden" name="id[]" value="<?= $content->id; ?>">
                     <div class="box challenge" id="challenge">
@@ -66,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     </div>
                     <div class="box attachment" id="attachment">
                         <span>添付ファイル:</span>
-                        <textarea name="attachment[]" cols="30" rows="1"><?= $content->attachment; ?></textarea>
+                        <img src="http://localhost/study-support/work/app/images/<?= $content->attachment ?>" alt="" width="200px" height="150px"> 
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -89,7 +93,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             </div>
             <div class="box attachment" id="attachment">
                 <span>添付ファイル:</span>
-                <textarea name="attachment[]" cols="30" rows="1"></textarea>
+                <input name="attachment" type="file" accept="image/*">
             </div>
         </div>
         <p class="plus">+</p>

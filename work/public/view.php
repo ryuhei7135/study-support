@@ -46,7 +46,7 @@ $contents = Content::getContent($pdo);
                 </div>
                 <div class="box attachment">
                     <span>添付ファイル:</span>
-                    <p><?= $content->attachment; ?></p>
+                    <img src="http://localhost/study-support/work/app/images/<?= $content->attachment; ?>" alt="" width="200px" height="150px">
                 </div>
                 <?php endforeach ?>
             </div>

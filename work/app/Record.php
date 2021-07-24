@@ -8,7 +8,7 @@ class Record{
         $stmt->bindValue('title', $recordTitle, PDO::PARAM_STR);
         $stmt->bindValue('folderId', $_COOKIE['folderId'], PDO::PARAM_INT);
         $stmt->execute();
-        header('Location: http://localhost:8562/list.php'); 
+        header('Location: http://localhost/study-support/work/public/list.php'); 
     }
 
     public static function getRecordId(){

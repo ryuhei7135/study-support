@@ -25,7 +25,7 @@ class Folder{
         $stmt = $pdo->prepare("DELETE FROM folder WHERE id = :id");
         $stmt->bindValue('id', $folderId, PDO::PARAM_INT);
         $stmt->execute();
-        header('Location: http://localhost:8562/top.php'); /* フォルダは削除されているがリロードしないと画面からは消えないので書いた */
+        header('Location: http://localhost/study-support/work/public/top.php'); /* フォルダは削除されているがリロードしないと画面からは消えないので書いた */
 
     }
 
@@ -34,7 +34,7 @@ class Folder{
         $stmt = $pdo->prepare("INSERT INTO folders (`name`) VALUES (:folderName)");
         $stmt->bindValue('folderName', $folderName, PDO::PARAM_STR);
         $stmt->execute();
-        header('Location: http://localhost:8562/top.php'); /* フォルダは作られるがリロードしないと表示されないので書いた */
+        header('Location: http://localhost/study-support/work/public/top.php'); /* フォルダは作られるがリロードしないと表示されないので書いた */
     }
 
 
