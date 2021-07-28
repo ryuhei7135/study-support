@@ -1,12 +1,12 @@
-<?php
+'<?php
 
 require_once('../app/config.php');
 $pdo = Database::getInstance();
 
 Token::create();
 
-$stmt = $pdo->query("SELECT * FROM folders");
-$folders = $stmt->fetchAll();
+/* 作成されたフォルダを取得 */
+$folders = Folder::getFolder($pdo);
 
 $action = filter_input(INPUT_GET,'action');
 
@@ -17,8 +17,8 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
     switch ($action){
         case 'getFolderProperty': /* フォルダがクリックされたとき */
-            $folderId = Folder::getFolderId();
-            $folderName = Folder::getFolderName();
+            $folderId = Folder::getFolderId(); //cookieにフォルダーIDをセット
+            Folder::getFolderName(); //cookieにフォルダ名をセット
             break;
         case 'makeFolder': /* フォルダ名が入力されたとき */
             Folder::makeFolder($pdo);

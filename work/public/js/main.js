@@ -30,7 +30,7 @@
             });
             });
 
-        /* フォルダをクリックすると一覧画面へ遷移 */
+        /* フォルダがクリックされたときの処理  一覧画面へ遷移 */
         if(typeof folderId !== 'undefined'){ 
             window.location.href = 'http://localhost/study-support/work/public/list.php';
         }else{
@@ -92,19 +92,19 @@
         }
 
         $('#makeFolderButton,#makeTaskButton').click(function (){
-            //body内の最後に背景を挿入
+            //モーダル表示
             $("body").append('<div id="modal-bg"></div>');
-        
             centeringModalSyncer();
-        
             $("#modal-bg,#modal").fadeIn("slow");
         
+            //モーダル非表示
             $("#modal-bg").click(function(){
                 $("#modal,#modal-bg").fadeOut("slow",function(){
                     $('#modal-bg').remove() ;
                 });
         
                 });
+
         });
 
         //ブラウザバック無効化
@@ -127,7 +127,10 @@
         
 
         });
+
+        console.log('helloworld');
+
         
-     });
+    });
 
 }

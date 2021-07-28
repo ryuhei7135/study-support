@@ -20,7 +20,9 @@ $contents = Content::getContent($pdo);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> <!-- jQueryスクリプト -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet"> <!-- Lightboxのスタイルシート -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script> <!-- Lightbox本体スクリプト -->
     <title>記録画面</title>
 </head>
 <body>
@@ -46,7 +48,7 @@ $contents = Content::getContent($pdo);
                 </div>
                 <div class="box attachment">
                     <span>添付ファイル:</span>
-                    <img src="http://localhost/study-support/work/app/images/<?= $content->attachment; ?>" alt="" width="200px" height="150px">
+                    <a href="http://localhost/study-support/work/app/images/<?= $content->attachment; ?>" data-lightbox="group"><img src="http://localhost/study-support/work/app/images/<?= $content->attachment; ?>" width="300"></a>
                 </div>
                 <?php endforeach ?>
             </div>

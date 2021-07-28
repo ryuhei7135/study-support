@@ -16,7 +16,7 @@ class Content{
 
     public static function addOrUpdate($pdo){
 
-        /* 追加・編集されたコンテンツの情報を受け取る */
+        /* 追加・更新されたコンテンツの情報を受け取る */
         $contents = self::getContentProperty();
 
         $stmt = $pdo->prepare("UPDATE contents
@@ -31,39 +31,25 @@ class Content{
 
         $uploadDir = '/Applications/XAMPP/xamppfiles/htdocs/study-support/work/app/images/';
 
+        /* コンテンツの追加・更新処理 */
         foreach($contents as $content){
+
+            self::saveImageToFolder($uploadDir); /* 画像をフォルダに保存 */
 
             $contentId = $content['id'];
             $challenge = $content['challenge'];
             $problem = $content['problem'];
-            $fileName = self::saveImageToFolder($uploadDir); /* 画像をフォルダに保存 */
+            $attachment = $content['attachment'];
 
-
-            // //画像をサーバで受け取る
-            // $tmp_path = $_FILES['attachment']['tmp_name'];
-            // $fileName = basename($_FILES['attachment']['name']);
-
-            // $save_path = $uploadDir.$fileName;//画像を保存するフォルダのパス
-
-            // if(is_uploaded_file($tmp_path)){ //ファイルはあるか
-
-            //     echo $fileName.'を'.$uploadDir.'アップしました。';
-
-            //     // ファイルをフォルダに保存する
-            //     move_uploaded_file($tmp_path,$save_path);
-            // }
-
-
-            
             if($contentId == ''){
 
-                //  コンテンツの追加処理
-                self::add($stine,$challenge,$problem,$fileName);
+                // 追加
+                self::add($stine,$challenge,$problem,$attachment);
                 
             }else{
 
-                // コンテンツの更新処理
-                self::update($stmt,$contentId,$challenge,$problem,$fileName);
+                //更新
+                self::update($stmt,$contentId,$challenge,$problem,$attachment);
 
             }
                 
@@ -75,7 +61,7 @@ class Content{
         $contentId = filter_input(INPUT_POST,'id',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);  /*[1,2] */ 
         $challenge = filter_input(INPUT_POST,'challenge',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [contentId「1」を編集しました,contentId「2」を編集しました] */
         $problem = filter_input(INPUT_POST,'problem',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [contentId「1」を編集しました,contentId「2」を編集しました]   */
-        $attachment = $_FILES['attachment']['name']; //アップロードされた画像の名前
+        $attachment = $_FILES['attachment']['name']; //[dog.png,cat.png]
 
         
         $contents = [];
@@ -87,55 +73,64 @@ class Content{
                 'id' =>$contentId[$i],
                 'challenge' => $challenge[$i],
                 'problem' => $problem[$i],
-                // 'attachment' => $attachment[$i]
-                'attachment' => $attachment
+                'attachment' => $attachment[$i]
 
             );
 
             //contents[]に挿入する
-            array_push($contents,$content);//[[id=>1,challenge=>contentId「1」を編集しました,probrem=>contentId「1」を編集しました,attachment=>contentId「1」を編集しました],[id=>2,challenge=>contentId「2」を編集しました,probrem=>contentId「2」を編集しました,attachment=>contentId「2」を編集しました]]
+            array_push($contents,$content);//[[id=>1,challenge=>contentId「1」を編集しました,probrem=>contentId「1」を編集しました,attachment=>dog.png],[id=>2,challenge=>contentId「2」を編集しました,probrem=>contentId「2」を編集しました,attachment=>cat.png]]
         }
 
         return $contents;
     }
 
-    private static function add($stine,$challenge,$problem,$fileName){
+    private static function add($stine,$challenge,$problem,$attachment){
 
         $stine->bindValue(':challenge', $challenge, PDO::PARAM_STR);
         $stine->bindValue(':problem', $problem, PDO::PARAM_STR); 
-        $stine->bindValue(':attachment',$fileName, PDO::PARAM_STR);
+        $stine->bindValue(':attachment',$attachment, PDO::PARAM_STR);
         $stine->bindValue(':recordId',$_COOKIE['recordId'], PDO::PARAM_INT);
         $stine->execute();
 
     }
 
-    private static function update($stmt,$contentId,$challenge,$problem,$fileName){
+    private static function update($stmt,$contentId,$challenge,$problem,$attachment){
 
         $stmt->bindValue(':contentId', $contentId, PDO::PARAM_INT);
         $stmt->bindValue(':challenge', $challenge, PDO::PARAM_STR);
         $stmt->bindValue(':problem', $problem, PDO::PARAM_STR); 
-        $stmt->bindValue(':attachment',$$fileName, PDO::PARAM_STR);
+        $stmt->bindValue(':attachment',$attachment, PDO::PARAM_STR);
         $stmt->execute();
 
     }
 
+    /* [
+        [name] => [dog.jpg,cat.jpg] ,
+        [type] => [text/plain,text/plain]
+
+       ]*/
+
+
+
     private static function saveImageToFolder($uploadDir){
 
-        //画像をサーバで受け取る
-        $tmp_path = $_FILES['attachment']['tmp_name'];
-        $fileName = basename($_FILES['attachment']['name']);
+        for($j = 0;$j<count($_FILES['attachment']['tmp_name']);$j++){
+
+        $tmp_path = $_FILES['attachment']['tmp_name'][$j]; //アップロードされた画像が格納されている一時的なパス
+        $fileName = basename($_FILES['attachment']['name'][$j]); //アップロードされた画像のファイル名
 
         $save_path = $uploadDir.$fileName;//画像を保存するフォルダのパス
 
-        if(is_uploaded_file($tmp_path)){ //ファイルはあるか
+        if(is_uploaded_file($tmp_path)){ //画像はあるか
 
             echo $fileName.'を'.$uploadDir.'アップしました。';
 
-            // ファイルをフォルダに保存する
+            // 画像をフォルダに保存する
             move_uploaded_file($tmp_path,$save_path);
         }
 
-        return $fileName;
+    }
+        
     }
 
 

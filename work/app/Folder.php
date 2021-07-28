@@ -37,6 +37,13 @@ class Folder{
         header('Location: http://localhost/study-support/work/public/top.php'); /* フォルダは作られるがリロードしないと表示されないので書いた */
     }
 
+    public static function getFolder($pdo){
+        $stmt = $pdo->query("SELECT * FROM folders");
+        $folders = $stmt->fetchAll();
+
+        return $folders;
+    }
+
 
 }
 
