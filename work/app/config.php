@@ -10,6 +10,8 @@ require_once('Todo.php');
 require_once('Folder.php');
 require_once('Record.php');
 require_once('Content.php');
+require_once('Image.php');
+require_once('Utils.php');
 
 session_start();
 ?>

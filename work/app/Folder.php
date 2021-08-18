@@ -22,7 +22,7 @@ class Folder{
     public static function deleteFolder($pdo){
         
         $folderId = filter_input(INPUT_POST,'folderId');
-        $stmt = $pdo->prepare("DELETE FROM folder WHERE id = :id");
+        $stmt = $pdo->prepare("DELETE FROM folders WHERE id = :id");
         $stmt->bindValue('id', $folderId, PDO::PARAM_INT);
         $stmt->execute();
         header('Location: http://localhost/study-support/work/public/top.php'); /* フォルダは削除されているがリロードしないと画面からは消えないので書いた */
@@ -30,7 +30,10 @@ class Folder{
     }
 
     public static function makeFolder($pdo){
-        $folderName = filter_input(INPUT_POST,'folderName');
+        $folderName = trim(filter_input(INPUT_POST,'folderName'));
+        if($folderName == ''){
+            return;
+        }
         $stmt = $pdo->prepare("INSERT INTO folders (`name`) VALUES (:folderName)");
         $stmt->bindValue('folderName', $folderName, PDO::PARAM_STR);
         $stmt->execute();

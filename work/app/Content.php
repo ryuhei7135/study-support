@@ -16,44 +16,75 @@ class Content{
 
     public static function addOrUpdate($pdo){
 
-        /* 追加・更新されたコンテンツの情報を受け取る */
-        $contents = self::getContentProperty();
-
+        $id = filter_input(INPUT_POST,'id',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [null,null] */
+        $challenge = filter_input(INPUT_POST,'challenge',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [犬の画像と猫の画像,レイアウトの画像とコードの画像] */
+        $problem = filter_input(INPUT_POST,'problem',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [犬の画像と猫の画像,レイアウトの画像とコードの画像]   */
+        $recordId = $_COOKIE['recordId'];
+    
+        // print_r($id);
+    
+        $contents = [];
+    
+        // contentsの中身の連想配列を作り、contents[]に挿入する処理
+        for($i=0;$i<count($challenge);$i++){
+            //contentsの中身の連想配列を作る
+            $content = array(
+                'id' =>$id[$i],
+                'challenge' => $challenge[$i],
+                'problem' => $problem[$i],
+                'recordId' => $recordId
+            );
+    
+            //contents[]に挿入する
+            array_push($contents,$content);//[[id => null,challenge => 犬の画像と猫の画像,probrem => 犬の画像と猫の画像,recordId => 17],[id=>null,challenge=>レイアウトの画像とコードの画像,probrem=>レイアウトの画像とコードの画像,recordId => 17]]
+        }
+    
+        // /* 追加 */
+        $stine = $pdo->prepare("INSERT INTO contents 
+            (challenge,problem,record_id) 
+            VALUES (:challenge,:problem,:recordId)");
+    
+        // /* 更新 */
         $stmt = $pdo->prepare("UPDATE contents
         SET challenge = :challenge,
-        problem = :problem,
-        attachment = :attachment 
+        problem = :problem
         WHERE id = :contentId");
-
-        $stine = $pdo->prepare("INSERT INTO contents 
-        (challenge,problem,attachment,record_id) 
-        VALUES (:challenge,:problem,:attachment,:recordId)");
-
-        $uploadDir = '/Applications/XAMPP/xamppfiles/htdocs/study-support/work/app/images/';
-
-        /* コンテンツの追加・更新処理 */
+    
+        // print_r($contents);
+    
+        $lastInsertId = [];
+    
         foreach($contents as $content){
-
-            self::saveImageToFolder($uploadDir); /* 画像をフォルダに保存 */
-
+    
             $contentId = $content['id'];
             $challenge = $content['challenge'];
             $problem = $content['problem'];
-            $attachment = $content['attachment'];
-
-            if($contentId == ''){
-
-                // 追加
-                self::add($stine,$challenge,$problem,$attachment);
+    
+            if($contentId !== ''){
+    
+                //更新
+                $stmt->bindValue(':challenge', $challenge, PDO::PARAM_STR);
+                $stmt->bindValue(':problem', $problem, PDO::PARAM_STR); 
+                $stmt->bindValue(':contentId', $contentId, PDO::PARAM_INT);
+                $stmt->execute();
+                
                 
             }else{
-
-                //更新
-                self::update($stmt,$contentId,$challenge,$problem,$attachment);
-
-            }
+    
+                // 追加
+                $stine->bindValue(':challenge', $challenge, PDO::PARAM_STR);
+                $stine->bindValue(':problem', $problem, PDO::PARAM_STR); 
+                $stine->bindValue(':recordId',$_COOKIE['recordId'], PDO::PARAM_INT); 
+                $stine->execute();
+                // $lastInsertId = $pdo->lastInsertId();
                 
+                array_push($lastInsertId,$pdo->lastInsertId());//[1,2]
+            }
+            
+            
         }
+        
+        return $lastInsertId;
     }
 
     private static function getContentProperty(){

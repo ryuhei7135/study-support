@@ -42,21 +42,6 @@ class Todo{
         return $records;
     }
 
-    
-
-    public static function delete($pdo){
-        $recordId = filter_input(INPUT_POST,'recordId');
-        if(empty($recordId)){
-            return;
-        }
-        $stmt = $pdo->prepare("DELETE FROM record WHERE id = :recordId");
-        $stmt->bindValue('recordId',$recordId,PDO::PARAM_INT);
-        $stmt->execute();
-    }
-
-    
-    
-
 }
 
 ?>

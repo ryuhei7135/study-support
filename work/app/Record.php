@@ -3,7 +3,10 @@
 class Record{
 
     public static function makeRecord($pdo){
-        $recordTitle = filter_input(INPUT_POST,'recordTitle');
+        $recordTitle = trim(filter_input(INPUT_POST,'recordTitle'));
+        if($recordTitle == ''){
+            return;
+        }
         $stmt = $pdo->prepare("INSERT INTO records (title,folder_id) VALUES (:title,:folderId)");
         $stmt->bindValue('title', $recordTitle, PDO::PARAM_STR);
         $stmt->bindValue('folderId', $_COOKIE['folderId'], PDO::PARAM_INT);
@@ -44,6 +47,16 @@ class Record{
         $btdh->bindValue('recordId', $_COOKIE['recordId'], PDO::PARAM_INT);
         $btdh->execute();
 
+    }
+
+    public static function delete($pdo){
+        $recordId = filter_input(INPUT_POST,'recordId');
+        if(empty($recordId)){
+            return;
+        }
+        $stmt = $pdo->prepare("DELETE FROM records WHERE id = :recordId");
+        $stmt->bindValue('recordId',$recordId,PDO::PARAM_INT);
+        $stmt->execute();
     }
 
 }
