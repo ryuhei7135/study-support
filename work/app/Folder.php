@@ -25,8 +25,6 @@ class Folder{
         $stmt = $pdo->prepare("DELETE FROM folders WHERE id = :id");
         $stmt->bindValue('id', $folderId, PDO::PARAM_INT);
         $stmt->execute();
-        header('Location: http://localhost/study-support/work/public/top.php'); /* フォルダは削除されているがリロードしないと画面からは消えないので書いた */
-
     }
 
     public static function makeFolder($pdo){

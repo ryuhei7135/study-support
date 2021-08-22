@@ -1,8 +1,19 @@
 /* 共通 */
+* {
+  box-sizing: border-box;
+}
 
 .body {
   background-color: #fbfbfb;
-  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  font-family: sans-serif;
+  color: #0a2540;
+}
+
+.main {
+  width: 100%;
 }
 
 a.btn {
@@ -19,9 +30,19 @@ a.btn:hover {
 }
 
 .app-title {
-  font-size: 20px;
-  padding: 5px;
-  color: white;
+  padding-left: 20px;
+  color: #fff;
+  font-family: serif;
+}
+
+.fas.fa-digital-tachograph {
+  color: #49c8b0;
+  padding-right: 10px;
+}
+
+.big {
+  color: #49c8b0;
+  font-size: 50px;
 }
 
 .header-right a {
@@ -29,7 +50,7 @@ a.btn:hover {
 }
 
 .navbar-brand {
-  color: white;
+  color: #fff;
 }
 
 .navbar {
@@ -40,25 +61,26 @@ a.btn:hover {
     #c850c0 46%,
     #1f0ad1 100%
   );
+  width: 100%;
 }
 
 .header-right a {
-  color: white;
+  color: #fff;
   display: inline-block;
   padding-right: 25px;
 }
 
 .header-right a:hover {
   cursor: pointer;
-  color: white;
+  color: #fff;
 }
 
 .back {
-  color: #fffeff;
+  color: #fff;
 }
 
 .modal {
-  width: 360px;
+  width: 100%;
   padding: 8% 0 0;
   margin: auto;
 }
@@ -156,17 +178,13 @@ a.btn:hover {
 
 /* トップ画面 */
 
-.header-top {
-  /* background-color: blueviolet; */
-  height: 70px;
-}
-
 .folderArea {
-  /* background-color: aqua; */
-  margin-top: 40px;
-  width: 1000px;
-  height: 1000px;
-  margin-left: 20px;
+  /* margin-top: 40px; */
+  padding-top: 40px;
+  width: 50%;
+  /* margin-left: 20px; */
+  /* background-color: yellow; */
+  margin: 0 auto;
 }
 
 .complete-top {
@@ -183,6 +201,7 @@ a.btn:hover {
 
 .folderName {
   font-size: 10px;
+  padding: 0px 10px;
   word-break: break-all;
 }
 
@@ -195,9 +214,13 @@ a.makeFolderBtn {
   height: 100px;
 }
 
+.recordArea {
+  margin-top: 50px;
+}
+
 .design10 {
   width: 100%;
-  text-align: center;
+  /* text-align: center; */
   border-collapse: collapse;
   border-spacing: 0;
   /* table-layout: fixed; */
@@ -207,12 +230,25 @@ a.makeFolderBtn {
   border-bottom: solid 4px #778ca3;
   color: #778ca3;
 }
+
 .design10 td {
   padding: 10px;
   border-bottom: solid 1px #778ca3;
+  cursor: pointer;
 }
 
-.design10 td:hover {
+.design10 tr.record {
+  text-align: center;
+}
+
+.pulldown-btn {
+  cursor: pointer;
+}
+
+.fas.fa-caret-down {
+  padding: 10px;
+  float: right;
+  display: none;
   cursor: pointer;
 }
 
@@ -229,7 +265,6 @@ a.makeFolderBtn {
 }
 
 .main {
-  height: 200px;
   padding-top: 20px;
 }
 
@@ -255,7 +290,7 @@ a.makeFolderBtn {
   cursor: pointer;
 }
 
-.delete,
+.deleteRecord,
 .folderDelete {
   color: #ccc;
   cursor: pointer;
@@ -299,7 +334,7 @@ a.makeFolderBtn {
   padding: 0.5em 1em;
   margin: 2em 0;
   color: #5d627b;
-  background: white;
+  background: #fff;
   border-top: solid 5px #778ca3;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
 }
@@ -311,4 +346,8 @@ a.makeFolderBtn {
 .title {
   width: 70%;
   word-break: break-word;
+}
+
+.sbmt-content {
+  width: 100%;
 }

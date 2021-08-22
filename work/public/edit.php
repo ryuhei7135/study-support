@@ -50,18 +50,24 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <link rel="stylesheet" type="text/css" href="responsive.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
     <title>編集画面</title>
 </head>
 <body class="body">
     <nav class="navbar navbar-light bg-light">
-        <h1 class="app-title">学習サポートDB</h1>
+        <div class="header-left">
+            <h1 class="app-title">
+                <span class="fas fa-digital-tachograph fa-lg"></span>
+                <span class="big">S</span>tudy<span class="big">S</span>upport<span class="big">DB</span>
+            </h1>
+        </div>
         <div class="header-right">
             <a href="reset.php" class="back list">一覧へ戻る</a>
         </div>
     </nav>
-    <div class="container">
+    <div class="container-fluid ps-5 pe-5">
         <div class="main">
             <div class="record title">
                 <h2><?= Utils::h($_COOKIE['recordTitle']);?></h2>
@@ -77,12 +83,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                                 <!-- 試したこと -->
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">試したこと</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="challenge[]" rows="3"><?= $content->challenge; ?></textarea>
+                                    <textarea class="form-control exampleFormControlTextarea1yy"  name="challenge[]" rows="3"><?= $content->challenge; ?></textarea>
                                 </div>
                                 <!-- 問題点 -->
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">問題点</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" name="problem[]" rows="3"><?= $content->problem; ?></textarea>
+                                    <textarea class="form-control exampleFormControlTextarea1yy"  name="problem[]" rows="3"><?= $content->problem; ?></textarea>
                                 </div>
                                 <!-- 添付ファイル -->
                                 <div class="mb-3">
@@ -118,12 +124,12 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     <!-- 試したこと -->
                     <div class="mb-3 challenge">
                         <label for="exampleFormControlTextarea1" class="form-label">試したこと</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" name="challenge[]" rows="3"></textarea>
+                        <textarea class="form-control exampleFormControlTextarea1yy"  name="challenge[]" rows="3"></textarea>
                     </div>
                     <!-- 問題点 -->
                     <div class="mb-3 problem">
                         <label for="exampleFormControlTextarea1" class="form-label">問題点</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" name="problem[]" rows="3"></textarea>
+                        <textarea class="form-control exampleFormControlTextarea1yy"  name="problem[]" rows="3"></textarea>
                     </div>
                     <!-- 添付ファイル -->
                     <div class="mb-3 attachment">
@@ -140,4 +146,3 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
 </body>
 </html>
-

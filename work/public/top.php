@@ -53,9 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="body">
     <nav class="navbar navbar-light bg-light">
-        <h1 class="app-title">学習サポートDB</h1>
+        <div class="header-left">
+            <h1 class="app-title">
+                <span class="fas fa-digital-tachograph fa-lg"></span>
+                <span class="big">S</span>tudy<span class="big">S</span>upport<span class="big">DB</span>
+            </h1>
+        </div>
     </nav>
-    <div class="container">
+    <div class="container-fluid ps-5 pe-5">
         <div class="main">
             <div class="header-top">
                 <a href="#" class="btn makeFolderBtn">フォルダを作る</a>
@@ -64,12 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="modal-form">
                     <form action="?action=makeFolder" method="post">
                         <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-                        <input class="folderName input" name="folderName" type="text" autocomplete="off" placeholder="foldername"/>
+                        <input class="folderName input" name="folderName" type="text" autocomplete="off" placeholder="フォルダ名"/>
                         <button class="create-folder">create</button>
                         <button class="close-modal">close</button>
-                        <!-- <div class="worning-message">
-                            <p class="message">※フォルダ名が空欄です</p>
-                        </div> -->
                     </form>
                 </div>
             </div>
@@ -84,16 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
                             </form>
                         </div>
-                            <div class="folderName">
-                                <p><?= Utils::h($folder->name); ?></p>
-                            </div>
-                            <div class="folderDeleteButton">
-                                <form action="?action=deleteFolder" method="post">
-                                    <span class="folderDelete">X</span>
-                                    <input type="hidden" name="folderId" value="<?= Utils::h($folder->id); ?>">
-                                    <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-                                </form>
-                            </div>
+                        <div class="folderName">
+                            <p><?= Utils::h($folder->name); ?></p>
+                        </div>
+                        <div class="folderDeleteButton" data-folder-id="<?= Utils::h($folder->id); ?>" data-token="<?= Utils::h($_SESSION['token']); ?>" >
+                            <span class="folderDelete">X</span>
+                        </div>
                     </div>
                 <?php endforeach; ?>
             </div>

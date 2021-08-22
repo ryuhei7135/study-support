@@ -1,28 +1,15 @@
-"use strict";
+'"use strict"';
 {
   $(function () {
-    const deletes = document.querySelectorAll(".delete"); /* バツボタン */
     const folders = document.querySelectorAll("i"); /* フォルダ */
     const records =
       document.querySelectorAll(".record"); /* 一覧画面に表示されているリスト */
-    console.log(records[0]);
     const addAndEdits =
       document.querySelectorAll(
         ".addAndEdit"
       ); /* 一覧画面に表示されているリスト */
     const icons = document.querySelectorAll('[name="icon"]'); //<i class='fas fa-folder fa-3x'></i>
     const foldersDelete = document.querySelectorAll(".folderDelete");
-
-    deletes.forEach((span) => {
-      // console.log(span);
-      span.addEventListener("click", () => {
-        if (!confirm("本当に削除しますか？")) {
-          return;
-          // alert("キャンセルされました");
-        }
-        span.parentNode.submit();
-      });
-    });
 
     /* フォルダをクリックするとフォルダIDを送信 */
     folders.forEach((folder) => {
@@ -47,30 +34,6 @@
     addAndEdits.forEach((addAndEdit) => {
       addAndEdit.addEventListener("click", () => {
         addAndEdit.parentNode.submit();
-      });
-    });
-
-    /* フォルダ作成 */
-    /* 非同期でフォルダを作ることに成功したが、リロードしないと表示されないのでDOM操作で予めフォルダを作っておく処理が必要 */
-    // makeFolderButton.addEventListener('click',()=>{
-    //     fetch('?action=makeFolder',{
-    //         method:'POST',
-    //         body: new URLSearchParams({
-    //             icon: icon.value,
-    //             token: token.value
-    //         })
-    //     })
-    //     /* フォルダは作られるがリロードしないと表示されないので前もって作っておく */
-    //     const i = document.createElement('i');
-    //     i.classList.add("fas","fa-folder","fa-3x");
-    //     document.querySelector('.doing-top').appendChild(i);
-    // });
-
-    foldersDelete.forEach((folderDelete) => {
-      folderDelete.addEventListener("click", () => {
-        if (confirm("本当に削除しますか？")) {
-          folderDelete.parentNode.submit();
-        }
       });
     });
 
@@ -102,6 +65,47 @@
           $(".modal-bg").remove();
         });
       });
+    });
+
+    // フォルダ作成の非同期処理
+    //formの要素を受け取る
+
+    //formのsubmitイベント
+
+    //formのイベントを無効にする
+    //fetch送信
+    //
+
+    // フォルダ削除の非同期処理
+    $(".folderDeleteButton").click(function (e) {
+      if (confirm("本当に削除しますか？")) {
+        let currentTarget = $(e.currentTarget);
+        fetch("?action=deleteFolder", {
+          method: "POST",
+          body: new URLSearchParams({
+            folderId: currentTarget.data("folderId"),
+            token: currentTarget.data("token"),
+          }),
+        });
+        currentTarget.parent().remove();
+      }
+    });
+
+    // レコード作成の非同期処理
+
+    // レコード削除の非同期処理
+    $(".deleteRecord").click(function (e) {
+      if (confirm("本当に削除しますか？")) {
+        let currentTarget = $(e.currentTarget);
+        fetch("?action=delete", {
+          method: "POST",
+          body: new URLSearchParams({
+            recordId: currentTarget.data("recordId"),
+            token: currentTarget.data("token"),
+          }),
+        });
+        currentTarget.parent().remove();
+      }
     });
 
     //ブラウザバック無効化
@@ -161,6 +165,30 @@
       //aタグの親のフォームを送信
       $(".edit-btn").closest(".sbmt-content").submit();
       // console.log($(".editbtn").closest(".sbmt-content").length);
+    });
+
+    let state = "false";
+
+    $(".pulldown-btn").click(function (e) {
+      if (state == "false") {
+        //非表示状態の処理
+        var target = $(e.currentTarget);
+        target.parent().nextAll().show();
+
+        //アイコンの変更
+        target.html('<i class="fas fa-caret-up"></i>');
+
+        state = "true";
+      } else {
+        //表示状態の処理
+        var target = $(e.currentTarget);
+        target.parent().nextAll().hide();
+
+        // アイコンの変更
+        target.html('<i class="fas fa-caret-down"></i>');
+
+        state = "false";
+      }
     });
   });
 }

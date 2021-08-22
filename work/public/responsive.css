@@ -1,0 +1,52 @@
+/* スマホ用レイアウト */
+@media screen and (max-width: 599px) {
+  /* 共通 */
+  div .title {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+
+  .btn {
+    margin-bottom: 10px;
+  }
+
+  .app-title {
+    font-size: 15px;
+  }
+
+  .big {
+    font-size: 25px;
+  }
+
+  .back {
+    font-size: 13px;
+  }
+
+  /* トップ画面 */
+  .folderArea {
+    width: 100%;
+  }
+
+  .folder {
+    width: 40%;
+    padding: 10px;
+    margin-right: 10px;
+  }
+
+  .folderName {
+    font-size: 13px;
+  }
+
+  /* 一覧画面 */
+  .design10 {
+    margin-bottom: 50px;
+  }
+
+  .fas.fa-caret-down {
+    display: block;
+  }
+
+  tr.record {
+    display: none;
+  }
+}
