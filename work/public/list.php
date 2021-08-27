@@ -6,7 +6,7 @@ $pdo = Database::getInstance();
 
 Token::create();
 
-$records = Todo::get($pdo); /* フォルダ内で作成された記録のみ表示 */
+$records = Record::getRecord($pdo); /* フォルダ内で作成された記録のみ表示 */
 
 $action = filter_input(INPUT_GET,'action');
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -30,25 +30,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 }
 
+require_once('../app/parts/header.php');
 
 ?>
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="responsive.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>一覧画面</title>
 </head>
 <body class="body">
@@ -85,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <div class="row">
                     <div class="col-md-6">
                         <div class="complete-list">
-                            <table class="design10">
+                            <table class="table">
                                 <tr>
                                     <th>完了</th>
                                     <th></th>
@@ -96,7 +81,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                                 <?php foreach($records as $record): 
                                         if($record->is_done == 1):  /* 完了 */
                                 ?>
-                                    <tr class="record">
+                                    <tr class="records">
                                         <td class="record">
                                             <form action="?action=addOrEdit" method="post">
                                                 <?= Utils::h($record->created);?>
@@ -125,7 +110,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     </div>
                     <div class="col-md-6">
                         <div class="doing-list">
-                            <table class="design10">
+                            <table class="table">
                                 <tr>
                                     <th>未完了</th>
                                     <th></th>
@@ -136,7 +121,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                                 <?php foreach($records as $record): 
                                         if($record->is_done == 0):  /* 未完了 */
                                 ?>
-                                    <tr class="record">
+                                    <tr class="records">
                                         <td class="record">
                                             <form action="?action=addOrEdit" method="post">
                                                 <?= Utils::h($record->created);?>
@@ -167,7 +152,5 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             </div>
         </div>
     </div>
-    <script src="js/main.js?p=(new Date()).getTime()"></script>  
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-</body>
-</html>
+    <?php
+    require_once('../app/parts/footer.php');

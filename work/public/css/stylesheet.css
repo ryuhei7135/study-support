@@ -14,6 +14,7 @@
 
 .main {
   width: 100%;
+  padding-top: 20px;
 }
 
 a.btn {
@@ -176,120 +177,6 @@ a.btn:hover {
   box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
 }
 
-/* トップ画面 */
-
-.folderArea {
-  /* margin-top: 40px; */
-  padding-top: 40px;
-  width: 50%;
-  /* margin-left: 20px; */
-  /* background-color: yellow; */
-  margin: 0 auto;
-}
-
-.complete-top {
-  background-color: red;
-  height: 200px;
-  margin-top: 50px;
-}
-
-.folder {
-  display: inline-block;
-  padding: 20px;
-  width: 15%;
-}
-
-.folderName {
-  font-size: 10px;
-  padding: 0px 10px;
-  word-break: break-all;
-}
-
-a.makeFolderBtn {
-  margin-top: 10px;
-}
-
-/* 一覧画面 */
-.header-list {
-  height: 100px;
-}
-
-.recordArea {
-  margin-top: 50px;
-}
-
-.design10 {
-  width: 100%;
-  /* text-align: center; */
-  border-collapse: collapse;
-  border-spacing: 0;
-  /* table-layout: fixed; */
-}
-.design10 th {
-  padding: 10px;
-  border-bottom: solid 4px #778ca3;
-  color: #778ca3;
-}
-
-.design10 td {
-  padding: 10px;
-  border-bottom: solid 1px #778ca3;
-  cursor: pointer;
-}
-
-.design10 tr.record {
-  text-align: center;
-}
-
-.pulldown-btn {
-  cursor: pointer;
-}
-
-.fas.fa-caret-down {
-  padding: 10px;
-  float: right;
-  display: none;
-  cursor: pointer;
-}
-
-/* 学習記録記入画面 */
-
-.header-is {
-  /* background-color: red; */
-  height: 100px;
-}
-
-.date {
-  float: right;
-  /* background-color: aqua; */
-}
-
-.main {
-  padding-top: 20px;
-}
-
-#test0 {
-  display: none;
-}
-
-.box {
-  margin-bottom: 20px;
-}
-
-.plus {
-  font-size: 25px;
-}
-
-.plus:hover {
-  cursor: pointer;
-}
-
-/* フォルダアイコン */
-.fa-folder {
-  color: #49c8b0;
-  cursor: pointer;
-}
-
 .deleteRecord,
 .folderDelete {
   color: #ccc;
@@ -317,12 +204,91 @@ a.makeFolderBtn {
   background-color: rgba(0, 0, 0, 0.75);
 }
 
+/* トップ画面 */
+
+.folderArea {
+  padding-top: 40px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.fa-folder {
+  color: #49c8b0;
+  cursor: pointer;
+}
+
+.complete-top {
+  background-color: red;
+  height: 200px;
+  margin-top: 50px;
+}
+
+.folder {
+  display: inline-block;
+  padding: 20px;
+  width: 15%;
+}
+
+.folderName {
+  font-size: 10px;
+  word-break: break-all;
+}
+
+a.makeFolderBtn {
+  margin-top: 10px;
+}
+
+/* 一覧画面 */
+.header-list {
+  height: 100px;
+}
+
+.recordArea {
+  margin-top: 50px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.table th {
+  padding: 10px;
+  border-bottom: solid 4px #778ca3;
+  color: #778ca3;
+}
+
+.table td {
+  padding: 10px;
+  border-bottom: solid 1px #778ca3;
+  cursor: pointer;
+}
+
+.table tr.records {
+  text-align: center;
+}
+
+.pulldown-btn {
+  cursor: pointer;
+}
+
+.fas.fa-caret-down {
+  padding: 10px;
+  float: right;
+  display: none;
+}
+
+.fas.fa-caret-up {
+  padding: 10px;
+  float: right;
+}
+
 /* 編集画面 */
 .cloneTarget {
   display: none;
 }
 
-.record {
+.records {
   padding-top: 10px;
 }
 
@@ -330,7 +296,7 @@ a.makeFolderBtn {
   float: right;
 }
 
-.box11 {
+.entryRecordField {
   padding: 0.5em 1em;
   margin: 2em 0;
   color: #5d627b;
@@ -350,4 +316,12 @@ a.makeFolderBtn {
 
 .sbmt-content {
   width: 100%;
+}
+
+.plus {
+  font-size: 25px;
+}
+
+.plus:hover {
+  cursor: pointer;
 }

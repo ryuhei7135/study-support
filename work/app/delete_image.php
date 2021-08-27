@@ -11,7 +11,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->bindValue(':image_id', (int)$_GET['id'], PDO::PARAM_INT);
 $stmt->execute();
 
-/* list.phpに遷移 */
+
 header('Location:http://localhost/study-support/work/public/edit.php');
 exit();
 ?>

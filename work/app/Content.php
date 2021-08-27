@@ -16,12 +16,11 @@ class Content{
 
     public static function addOrUpdate($pdo){
 
-        $id = filter_input(INPUT_POST,'id',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [null,null] */
-        $challenge = filter_input(INPUT_POST,'challenge',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [犬の画像と猫の画像,レイアウトの画像とコードの画像] */
-        $problem = filter_input(INPUT_POST,'problem',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [犬の画像と猫の画像,レイアウトの画像とコードの画像]   */
+        $id = filter_input(INPUT_POST,'id',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); 
+        $challenge = filter_input(INPUT_POST,'challenge',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); 
+        $problem = filter_input(INPUT_POST,'problem',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); 
         $recordId = $_COOKIE['recordId'];
     
-        // print_r($id);
     
         $contents = [];
     
@@ -36,7 +35,7 @@ class Content{
             );
     
             //contents[]に挿入する
-            array_push($contents,$content);//[[id => null,challenge => 犬の画像と猫の画像,probrem => 犬の画像と猫の画像,recordId => 17],[id=>null,challenge=>レイアウトの画像とコードの画像,probrem=>レイアウトの画像とコードの画像,recordId => 17]]
+            array_push($contents,$content);
         }
     
         // /* 追加 */
@@ -50,7 +49,6 @@ class Content{
         problem = :problem
         WHERE id = :contentId");
     
-        // print_r($contents);
     
         $lastInsertId = [];
     
@@ -76,9 +74,8 @@ class Content{
                 $stine->bindValue(':problem', $problem, PDO::PARAM_STR); 
                 $stine->bindValue(':recordId',$_COOKIE['recordId'], PDO::PARAM_INT); 
                 $stine->execute();
-                // $lastInsertId = $pdo->lastInsertId();
                 
-                array_push($lastInsertId,$pdo->lastInsertId());//[1,2]
+                array_push($lastInsertId,$pdo->lastInsertId());
             }
             
             
@@ -89,10 +86,10 @@ class Content{
 
     private static function getContentProperty(){
 
-        $contentId = filter_input(INPUT_POST,'id',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);  /*[1,2] */ 
-        $challenge = filter_input(INPUT_POST,'challenge',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [contentId「1」を編集しました,contentId「2」を編集しました] */
-        $problem = filter_input(INPUT_POST,'problem',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); /* [contentId「1」を編集しました,contentId「2」を編集しました]   */
-        $attachment = $_FILES['attachment']['name']; //[dog.png,cat.png]
+        $contentId = filter_input(INPUT_POST,'id',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY);  
+        $challenge = filter_input(INPUT_POST,'challenge',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); 
+        $problem = filter_input(INPUT_POST,'problem',FILTER_DEFAULT, FILTER_REQUIRE_ARRAY); 
+        $attachment = $_FILES['attachment']['name']; 
 
         
         $contents = [];
@@ -109,7 +106,7 @@ class Content{
             );
 
             //contents[]に挿入する
-            array_push($contents,$content);//[[id=>1,challenge=>contentId「1」を編集しました,probrem=>contentId「1」を編集しました,attachment=>dog.png],[id=>2,challenge=>contentId「2」を編集しました,probrem=>contentId「2」を編集しました,attachment=>cat.png]]
+            array_push($contents,$content);
         }
 
         return $contents;
@@ -135,11 +132,7 @@ class Content{
 
     }
 
-    /* [
-        [name] => [dog.jpg,cat.jpg] ,
-        [type] => [text/plain,text/plain]
-
-       ]*/
+    
 
 
 

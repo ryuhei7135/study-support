@@ -7,7 +7,7 @@ Token::create();
 $pdo = Database::getInstance();
 
 //レコード内で作成されたコンテンツを取得
-$contents = Content::getContent($pdo);//[[id=>1,challenge=>readJSinhead,probrem=>noProces,attachment=>none,record_id=>1],[id=>2,challenge=>readJSinbody,probrem=>success,attachment=>none,record_id=>1]]
+$contents = Content::getContent($pdo);
 
 //完了または保管がクリックされたとき
 if($_SERVER['REQUEST_METHOD'] === 'POST'){ 
@@ -30,29 +30,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     // exit;
 }
 
+require_once('../app/parts/header.php');
 
 ?>
 
 
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Cache-Control" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <link rel="stylesheet" type="text/css" href="responsive.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
     <title>編集画面</title>
 </head>
 <body class="body">
@@ -74,24 +56,24 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             </div>
             <form action="" method="post" class="sbmt-content" enctype="multipart/form-data"> 
                 <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']); ?>">
-                <div class="entryRecordArea"> <!-- foreachを使うとテキストエリアの初期値が同じ内容になってしまう。とはいえオブジェクト指向に改善したほうが良い -->
+                <div class="entryRecordArea"> 
                     <!-- コンテンツを表示 -->
                     <?php foreach($contents as $content): ?> 
-                        <div class="box11">
+                        <div class="entryRecordField">
                             <div class="entryRecord">
                                 <input type="hidden" name="id[]" value="<?= $content->id; ?>">
                                 <!-- 試したこと -->
-                                <div class="mb-3">
+                                <div class="mb-3 challenge">
                                     <label for="exampleFormControlTextarea1" class="form-label">試したこと</label>
                                     <textarea class="form-control exampleFormControlTextarea1yy"  name="challenge[]" rows="3"><?= $content->challenge; ?></textarea>
                                 </div>
                                 <!-- 問題点 -->
-                                <div class="mb-3">
+                                <div class="mb-3 problem">
                                     <label for="exampleFormControlTextarea1" class="form-label">問題点</label>
                                     <textarea class="form-control exampleFormControlTextarea1yy"  name="problem[]" rows="3"><?= $content->problem; ?></textarea>
                                 </div>
                                 <!-- 添付ファイル -->
-                                <div class="mb-3">
+                                <div class="mb-3 attachment">
                                     <label for="exampleFormControlTextarea1" class="form-label">添付ファイル</label>
                                     <!-- コンテンツごとに画像を表示 -->
                                     <?php
@@ -111,7 +93,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <input class="status" type="hidden" name="status" value=""> <!-- クリックされたボタンに応じてvalueが格納される -->
+                <input class="status" type="hidden" name="status" value=""> 
                 <div class="edit-btn">
                     <a href="#" class="btn done" value="done">完了</a>
                     <a href="#" class="btn notDone" value="notDone">保管</a>
@@ -119,7 +101,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             </form>
             <!-- 新しいコンテンツの記入欄 -->
             <div class="cloneTarget">
-                <div class="box11">
+                <div class="entryRecordField">
                     <input type="hidden" name="id[]" value="">
                     <!-- 試したこと -->
                     <div class="mb-3 challenge">
@@ -142,7 +124,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
             <p class="plus">+</p>
         </div>
     </div>
-    <script src="js/main.js?p=(new Date()).getTime()"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
-</body>
-</html>
+    <?php
+    require_once('../app/parts/footer.php');
+

@@ -30,7 +30,7 @@ class Image{
 
     public static function addImages($pdo,$lastInsertId){
 
-        $attachment = $_FILES['attachment']['name']; //[cat.png]
+        $attachment = $_FILES['attachment']['name']; 
     
         $images = [];
     
@@ -42,7 +42,7 @@ class Image{
             );
     
             //contents[]に挿入する
-            array_push($images,$image);//[[attachment=>dog.png,contentId=>1],[attachment=>cat.png,contentId=>2]]
+            array_push($images,$image);
         }
     
         $stine = $pdo->prepare("INSERT INTO images 
@@ -52,7 +52,7 @@ class Image{
         foreach($images as $image){
     
             $attachment = $image['attachment'];
-            $contentId = $image['contentId'];//後で直す
+            $contentId = $image['contentId'];
     
             $stine->bindValue(':attachment',$attachment, PDO::PARAM_STR);
             $stine->bindValue(':contentId',$contentId, PDO::PARAM_INT); 
