@@ -23,7 +23,9 @@ SSDB
 
 ・フォルダクリック時にフォルダ内で作られたレコードのみを表示する機能  
   
-・添付ファイルを記録する機能  
+・ローカル環境での画像アップロード機能
+  
+・本番環境でのS3を使用した画像アップロード機能  
   
 ・編集画面の「十」クリック時、新しいコンテンツの記入欄を表示する機能  
   
@@ -33,7 +35,7 @@ SSDB
 コンテンツ:edit.phpの記録
 
 # 使用技術
-HTML/CSS/javascript/jquery/bootstrap/PHP/Mysql
+HTML/CSS/javascript/jquery/bootstrap/PHP/Mysql/aws(s3)
 
 # 選定理由
 
