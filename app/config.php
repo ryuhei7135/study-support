@@ -14,5 +14,6 @@ require_once('Image.php');
 require_once('Utils.php');
 require_once('S3.php');
 
+// session_set_cookie_params(60);
 session_start();
 ?>

@@ -6,16 +6,24 @@ if(isset($_COOKIE['folderId'],$_COOKIE['folderName'],$_COOKIE['recordId'],$_COOK
     setcookie('recordId',''); 
     setcookie('recordTitle',''); 
     header('Location: ./list.php');
-}
-
-
-//トップ画面へ戻るがクリックされたとき
-if(isset($_COOKIE['folderId'],$_COOKIE['folderName']) && !isset($_COOKIE['recordId'],$_COOKIE['recordTitle'])){
-    //クッキーのリセット
+}elseif(isset($_COOKIE['folderId'],$_COOKIE['folderName']) && !isset($_COOKIE['recordId'],$_COOKIE['recordTitle'])){
+    //トップ画面へ戻るがクリックされたとき
     setcookie('folderId',''); 
     setcookie('folderName',''); 
     header('Location: ./index.php');
+}else{
+    //トップ画面でセッションの有効期限が切れたとき
+    header('Location: ./index.php');
 }
+
+
+// //トップ画面へ戻るがクリックされたとき
+// if(isset($_COOKIE['folderId'],$_COOKIE['folderName']) && !isset($_COOKIE['recordId'],$_COOKIE['recordTitle'])){
+//     //クッキーのリセット
+//     setcookie('folderId',''); 
+//     setcookie('folderName',''); 
+//     header('Location: ./index.php');
+// }
 
 
 ?>

@@ -84,7 +84,7 @@ require_once('./app/parts/header.php');
                                     <tr class="records">
                                         <td class="record">
                                             <form action="?action=addOrEdit" method="post">
-                                                <?= Utils::h($record->created);?>
+                                                <?= date('Y-n-j H:i', strtotime($record->created));?>
                                                 <input type="hidden" name="recordId" value="<?= Utils::h($record->id); ?>">
                                                 <input type="hidden" name="recordTitle" value="<?= Utils::h($record->title); ?>">
                                                 <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']);?>">
@@ -124,7 +124,7 @@ require_once('./app/parts/header.php');
                                     <tr class="records">
                                         <td class="record">
                                             <form action="?action=addOrEdit" method="post">
-                                                <?= Utils::h($record->created);?>
+                                                <?= date('Y-n-j H:i', strtotime($record->created));?>
                                                 <input type="hidden" name="recordId" value="<?= Utils::h($record->id); ?>">
                                                 <input type="hidden" name="recordTitle" value="<?= Utils::h($record->title); ?>">
                                                 <input type="hidden" name="token" value="<?= Utils::h($_SESSION['token']);?>">
