@@ -19,6 +19,8 @@ SSDB
   
 ・画面キャプチャーを記録できるので、言葉で表現しにくいことも記録できる
 
+・フォルダーとタスクの削除機能にAjaxを使用しました
+
 # 苦労した点
 
 ・フォルダクリック時にフォルダ内で作られたレコードのみを表示する機能  
@@ -35,7 +37,7 @@ SSDB
 コンテンツ:edit.phpの記録
 
 # 使用技術
-HTML/CSS/javascript/jquery/bootstrap/PHP/Mysql/aws(s3)
+HTML/CSS/javascript/jquery/bootstrap/PHP/Mysql/AWS(s3)/Ajax
 
 # 選定理由
 
