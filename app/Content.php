@@ -42,6 +42,9 @@ class Content{
             //contents[]に挿入する
             array_push($contents,$content);
         }
+
+        // print_r($contents);
+        // die();
     
         // /* 追加 */
         $stine = $pdo->prepare("INSERT INTO contents 

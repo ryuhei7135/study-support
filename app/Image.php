@@ -41,7 +41,8 @@ class Image{
 
         
     } 
-
+//lastinsertID:新規作成されたコンテンツのIDを格納した配列
+//attachments:画像が保存されているパケットのパスを買う脳した配列
 public static function addImages($pdo,$lastInsertId,$attachments){
     
     // $attachment = $_FILES['attachment']['name']; 
@@ -51,9 +52,9 @@ public static function addImages($pdo,$lastInsertId,$attachments){
     for($i=0;$i<count($attachments);$i++){
         //contentsの中身の連想配列を作る
         $image = array(
-                'image_name' => $_FILES['attachment']['name'][$i], 
-                'attachment' => $attachments[$i],
-                'contentId' =>$lastInsertId[$i]
+                'image_name' => $_FILES['attachment']['name'][$i], //ファイル名
+                'attachment' => $attachments[$i],//バケットパス
+                'contentId' =>$lastInsertId[$i]//どのコンテンツの画像か
         );
 
         //contents[]に挿入する

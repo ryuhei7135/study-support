@@ -93,7 +93,7 @@ class Record{
 
         public static function getRecord($pdo){
             $folderId = $_COOKIE['folderId'];
-            $stmt = $pdo->prepare("SELECT * FROM records WHERE folder_id = :folderId ORDER BY id DESC");
+            $stmt = $pdo->prepare("SELECT * FROM records WHERE folder_id = :folderId ORDER BY created DESC");
             $stmt->execute(['folderId'=>$folderId]);
             $records = $stmt->fetchAll();
             return $records;

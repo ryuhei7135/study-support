@@ -1,8 +1,12 @@
 <?php
 
-define('DSN','mysql:dbname=heroku_494641d6253bc4a;host=us-cdbr-east-04.cleardb.com;charset=utf8');
-define('DB_USER', 'bb805e1b9243e2');
-define('DB_PASS', '313fe960');
+// define('DSN','mysql:dbname=heroku_494641d6253bc4a;host=us-cdbr-east-04.cleardb.com;charset=utf8');
+// define('DB_USER', 'bb805e1b9243e2');
+// define('DB_PASS', '313fe960');
+
+define('DSN','mysql:dbname=LAA1501034-studysupport;host=mysql210.phy.lolipop.lan;charset=utf8');
+define('DB_USER', 'LAA1501034');
+define('DB_PASS', 'Studysupport');
 
 
 require_once('Token.php');

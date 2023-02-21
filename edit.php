@@ -8,7 +8,8 @@ require_once('./app/config.php');
 $s3 = S3::GetS3Instance();
 
 // バケットの情報
-$bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
+// $bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
+$bucket = 'ssdb-images';
 
 
 Token::create();
@@ -40,9 +41,11 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
         //バケットに画像を保存
         $attachments = S3::saveImageToBacket($s3,$bucket,$upload_image);
         }catch(Exception $e){
-            echo "Error";
+            echo $e;
         }
     
+        // print_r($attachments);
+        // die();
         // //DBに画像を保存
         Image::addImages($pdo,$lastInsertId,$attachments);
 
